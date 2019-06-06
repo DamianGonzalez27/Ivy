@@ -1,0 +1,3 @@
+##Aqui se encuentran los documentos de javascript que se usan en la aplicacion web.
+#Se encuentra la libreria de JQuery.
+#Se encuentra el framework bootstrap

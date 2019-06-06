@@ -1,0 +1,3 @@
+##Dentro de esta seccion encontramos los estilos que se pueden usar en la aplicacion web
+#Se encuentra contenido con fines de pruebas locales el framework de bootstrap.
+#Se encuentra la libreria de fuentes fontawesome
