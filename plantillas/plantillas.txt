@@ -1,5 +1,0 @@
-##En este directorio se encuentran todas las vistas de plantillas que se usan en la aplicacion web
-#Se encuentran los documentos de declaracion de html
-#se encuentran los recursos del slide del home
-#Se encuentan los elementos de cierre de html
-#Se encuentran los elementos de los diferentes gestores de contenido
