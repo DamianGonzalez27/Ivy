@@ -1,4 +1,5 @@
 <?php
+namespace App\config;
 #Constantes de la base
 define('NOMBRE_SERVIDOR', 'localhost');
 define('NOMBRE_USER', 'root');

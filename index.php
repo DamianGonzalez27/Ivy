@@ -37,36 +37,9 @@ if ($partes_ruta[0] == 'ivyframe'){
   #Aqui definimos la segunda parte de la ruta
   }else if (count($partes_ruta) == 2){
       switch($partes_ruta[1]){
-          //Ruta publica del blog
-          #No requiere proteccion
-                case 'blog':
-
-                  break;
-          //Ruta de la tienda en linea
-          #La vista no requiere proteccion
-                case 'tienda':
-                $gestor_actual = '';
-                $ruta_elegida = "vistas/tienda.php";
-                  break;
-          //Ruta de la seccion de promocion de eventos
-          #No requiere proteccion
-                case 'evento':
-                $gestor_actual = '';
-                $ruta_elegida = 'vistas/evento.php';
-                  break;
-          //Ruta del medio de contacto por email
-          #No requiere proteccion
-               case 'contacto':
-               $ruta_elegida = "vistas/contacto.php";
-                 break;
-            //Ruta del aviso de privacidad
-            #No requiere proteccion
-               case 'privacidad':
-               $ruta_elegida = "vistas/privacidad.php";
-                 break;
-            //Ruta de inicio de sesion de usuarios
-            #No requiere de proteccion
-            
+          case 'hola':
+            return "Hola mundo";
+            break;
       }
   }
 }

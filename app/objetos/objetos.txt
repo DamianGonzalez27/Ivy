@@ -1,3 +1,0 @@
-##En esta seccion de la aplicacion se encuentran todos los objetos de control de informacion de la pagina
-##En esta se pueden encontrar las interacciones con la base de datos y la interfaz grafica
-##A travez de estos objetos controlamos la informacion que es insertada en la base de datos

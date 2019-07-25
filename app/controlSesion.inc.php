@@ -1,4 +1,5 @@
 <?php
+namespace App\ControlSesion;
 //Esta es la clase para validar la sesion del usuario
 class ControlSesion{
 

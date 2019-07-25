@@ -1,4 +1,5 @@
 <?php
+namespace App\Redireccion;
 //Con esta clase realizamos las diferentes redirecciones dentro de la aplicacion web
 class Redireccion{
 

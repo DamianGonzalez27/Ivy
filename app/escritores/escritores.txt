@@ -1,2 +1,0 @@
-##En esta seccion del proyecto se encuentran los escritores de las diferentes paginas del proyecto
-##Se generan escritores por las busquedas del usuario y las mostramos en pantalla
