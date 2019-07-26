@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Conexion;
+namespace App\Configuraciones\Conexion;
+
 //Esta es la clase conexion
 class Conexion{
 
