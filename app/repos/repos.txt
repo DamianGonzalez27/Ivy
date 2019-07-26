@@ -1,2 +1,0 @@
-##En esta session de la aplicacion se encuentran todas las llamadas al servidor que se realizan a travez de la pagina
-##Se realizan consultas a la base de datos

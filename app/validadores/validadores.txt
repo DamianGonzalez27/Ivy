@@ -1,3 +1,0 @@
-##En esta seccion de la aplicacion se encuentran los validadores del software
-##Aqui se realizan validaciones de los formularios que se ingresan a la base de datos
-##La informacion es filtrada a travez de estas clases

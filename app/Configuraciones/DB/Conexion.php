@@ -2,6 +2,8 @@
 
 namespace App\Configuraciones\Conexion;
 
+use App\Configuraciones\Config;
+
 //Esta es la clase conexion
 class Conexion{
 
@@ -13,7 +15,6 @@ public static function abrirConexion(){
   #Verificamos la conexion
   if(!isset(self::$conexion)){
     try {
-      include_once 'config.inc.php';
       self::$conexion = new PDO('mysql:host='.NOMBRE_SERVIDOR.'; dbname='.NOMBRE_BASE, NOMBRE_USER, PASS);
       self::$conexion -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       self::$conexion -> exec("SET CHARACTER SEt utf8");

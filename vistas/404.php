@@ -1,6 +1,6 @@
 <?php
 $titulo = 'Not Found';
-header($_SERVER['SERVER_PROTOCOL']."404 Not Found", true, 404);
+//header($_SERVER['SERVER_PROTOCOL']."404 Not Found", true, 404);
 include_once 'app/config.inc.php';
 include_once 'plantillas/apertura.inc.php';
 
