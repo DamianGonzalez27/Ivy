@@ -1,8 +1,7 @@
 <?php
-ob_start();
-//Incluimos las librerias que vamos a usar
 
 use App\Configuraciones\Config;
+use App\Controladores\Controlador;
 /*Aqui manejamos las diferentes rutas en donde puede navegar el usuario
 Descomponemos la url en el navegador para asi poder enviar los parametros por medio de constantes
 estas rutas se encuentran en el archivo  /app/config.inc.php
@@ -23,7 +22,7 @@ $ruta_elegida = '../index.html';
 if (count($partes_ruta) == 3) {
   switch ($partes_ruta[2]) {
     case 'test':
-      $ruta_elegida = "../vistas/test.html";
+      return "Hola mundo";
       break;
   }
 }

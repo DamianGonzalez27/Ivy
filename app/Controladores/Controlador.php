@@ -1,10 +1,10 @@
 <?php
-namespace App\Controladores\Controlador;
+namespace App\Controladores;
 
 class Controlador{
 
-  public function __construct(){
-    
+  public function test(){
+    return $_POST['test'];
   }
 
 }
