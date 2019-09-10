@@ -11,4 +11,8 @@ class Controlador{
     $test = "Esto es una prueba";
     return $test;
   }
+  public function otraFunction()
+  {
+  return "esto es otra funcion";
+  }
 }
