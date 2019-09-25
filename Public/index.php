@@ -7,10 +7,6 @@
 *
 */
 
-function nuevaFuncion()
-{
-  return "test";
-}
 
 $ruta = "../Front/vistas/home.html";
 
