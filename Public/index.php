@@ -7,7 +7,9 @@
 *
 */
 
-
+function test(){
+  return "Hola meli";
+}
 
 $ruta = "../front/vistas/home.html";
 
