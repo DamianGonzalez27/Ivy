@@ -4,10 +4,13 @@
 * @author Damian Gonzalez
 * @since 08/2019
 * En este archivo se encuentra inicializado toda la logica para comenzar con el framework
-* 
+*
 */
 
-
+function nuevaFuncion()
+{
+  return "test";
+}
 
 $ruta = "../Front/vistas/home.html";
 
