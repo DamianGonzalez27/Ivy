@@ -1,1 +1,0 @@
-##En esta carpeta se encuentran localizados todos los medios y recursos multimedia que se emplean en la aplicacion web

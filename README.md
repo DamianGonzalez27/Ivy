@@ -1,6 +1,5 @@
-# IvyFrame
-IvyFrame es un framework de desarrollo web que trabaja con la filosofia DRY.
-Desarrollado por DamianGonzalezDev
+## IvyFrame
 
-Tiene como principal objetivo integrar los lenguajes de programacion PHP y Javascript
-Separa PHP del lado del Back-End y Javascript del lado del Front-End
+IvyFrame es un proyecto personal con la intencion de crear una herramienta que le permita a los desarrolladores
+reducir el codigo inescesario, escalar aplicaciones, y facilitar el desarrollo del Backend, provellendo de multiples beneficios al Frontend.
+ 
