@@ -5,6 +5,7 @@ class Autoload
     private $carga;
     private $metodo;
 
+    //Agregamos un comentaro
     public function __construct($carga)
     {
         $this->carga=$carga;
