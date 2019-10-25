@@ -1,11 +1,13 @@
 <?php
 namespace Core\Rutas;
 
-class Kernel{
+class Kernel
+{
 
-    public static function getRutas(){
+    public function getRutas()
+    {
 
-        echo "Test";
+        return "Test";
 
     }
 }
