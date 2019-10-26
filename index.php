@@ -1,22 +1,14 @@
 <?php
 
-include_once "Core/Autoloader/Autoload.php";
+require 'vendor/autoload.php';
 
-$ruta_kernel = 'Core\Kernel';
+use Core\Autoloader;
 
-$kernel = new Autoload($ruta_kernel);
+$a = new Autoload;
 
-$app = $kernel->ruta();
+$b = $a->register();
 
-require_once $app;
-
-use Core\Kernel;
-
-$test = Kernel::test();
-
-print($test);
-
-//Core\Kernel::test();
+print($b);
 
 
 
