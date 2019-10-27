@@ -15,10 +15,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Core\\": "Core",
-            "Controllers\\": "Controladores",
-            "Modelos\\": "Modelos",
-            "Servicios\\": "Servicios"
+            "Core\\": "Core/",
+            "Controladores\\": "Controladores/",
+            "Modelos\\": "Modelos/",
+            "Servicios\\": "Servicios/"
         }
     }
     
