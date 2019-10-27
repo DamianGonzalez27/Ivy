@@ -1,35 +1,32 @@
 <?php
 
+/**
+ * @Author DamianDev
+ * @Scince 2019
+ * @Email ing.gonzaleza@outlook.com 
+ * 
+ * IvyFrame es un proyecto opensource con la finalidad de crear una herramienta que permita a los desarroladores
+ * crear aplicaciones escalables
+ * 
+ */
+
+//Carga de la clase 'Autoload' de Composer
 require __DIR__.'/vendor/autoload.php';
 
-use Core\Kernel as Kernel;
-use Controladores\Kernel as Controlador;
-use Modelos\Kernel as Modelo;
-use Servicios\Kernel as Servicio;
 
-$kernel = new Kernel;
-//print('test');
-$controlador = new Controlador;
-//print('test');
-$modelo = new Modelo;
-//print('test');
-$servicio = new Servicio;
-//print('test');
+//Carga del core de funcionalidad del Framework
+$app = new Core\Kernel;
 
-$a = $kernel->test();
-$b = $controlador->test();
-$c = $modelo->test();
-$d = $servicio->test();
 
-$response = array(
-    'kernel' => $a,
-    'controlador' => $b,
-    'modelo' => $c,
-    'servicio' => $d
-);
+//Ejecucion de la aplicacion
+$test = $app->run();
 
-echo "<pre>";
-print_r($response);
+print_r($test);
+
+
+
+
+
 
 
 
