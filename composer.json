@@ -1,0 +1,25 @@
+{
+    "name": "vendor/ivy-frame",
+    "description": "Paquete de dependencias de IvyFrame",
+    "type": "project",
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "DamianDev",
+            "email": "ing.gonzaleza@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "Controladores\\": "Controladores/",
+            "Modelos\\": "Modelos/",
+            "Servicios\\": "Servicios/"
+        }
+    }
+    
+}

@@ -4,6 +4,6 @@ class Kernel
 {
     public function test()
     {
-        return "Test";
+        return "Test desde el kernel";
     }
 }

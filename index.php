@@ -1,23 +1,35 @@
 <?php
 
-include_once "Core/Autoloader/Autoload.php";
+require __DIR__.'/vendor/autoload.php';
 
-$ruta_kernel = 'Core\Kernel';
+use Core\Kernel as Kernel;
+use Controladores\Kernel as Controlador;
+use Modelos\Kernel as Modelo;
+use Servicios\Kernel as Servicio;
 
-$kernel = new Autoload($ruta_kernel);
+$kernel = new Kernel;
+//print('test');
+$controlador = new Controlador;
+//print('test');
+$modelo = new Modelo;
+//print('test');
+$servicio = new Servicio;
+//print('test');
 
-$app = $kernel->ruta();
+$a = $kernel->test();
+$b = $controlador->test();
+$c = $modelo->test();
+$d = $servicio->test();
 
-require_once $app;
+$response = array(
+    'kernel' => $a,
+    'controlador' => $b,
+    'modelo' => $c,
+    'servicio' => $d
+);
 
-use Core\Kernel;
-
-$test = Kernel::test();
-
-print($test);
-
-//Core\Kernel::test();
-
+echo "<pre>";
+print_r($response);
 
 
 
