@@ -21,6 +21,7 @@ $app = new Core\Kernel;
 //Ejecucion de la aplicacion
 $test = $app->run();
 
+
 print_r($test);
 
 

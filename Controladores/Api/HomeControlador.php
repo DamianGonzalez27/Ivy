@@ -1,11 +1,11 @@
-<?php namespace Controladores;
+<?php namespace Controladores\Api;
 
-class TestController
+class HomeControlador
 {
     public function index()
     {
         $response = array(
-            "Mensaje" => "Esto es un mensaje desde el controlador"
+            "Wellcome" => "Bienvenido a IvyFrame"
         );
         return json_encode($response, true);
     }

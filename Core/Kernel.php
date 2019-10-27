@@ -13,8 +13,13 @@ class Kernel
     
     public function run()
     {
-        
-        return $this->evalRuta($this->ruta);
+        if($_POST)
+        {
+            return $_POST;
+        }
+        $controller = $this->evalRuta($this->ruta);
+        $response = new $controller;
+        return $response->index();
         
     }
 
