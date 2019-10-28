@@ -5,8 +5,9 @@ class UsuariosControlador
     public function index()
     {
         $response = array(
-            "Mensaje" => "Esta es una respuesta desde el controlador de usuarios"
+            "Mensaje" => "Mensaje enviado desde los usuarios"
         );
-        return json_encode($response, true);
+
+        return json_encode($response);
     }
 }

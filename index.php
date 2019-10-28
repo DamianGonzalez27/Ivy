@@ -21,8 +21,13 @@ $app = new Core\Kernel;
 //Ejecucion de la aplicacion
 $test = $app->run();
 
+$data = json_decode(file_get_contents("php://input"), true);
 
-print_r($test);
+echo "<pre>";
+
+var_dump($test);
+var_dump($data);
+
 
 
 

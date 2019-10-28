@@ -7,7 +7,13 @@ class Register
         return $rutasConfig = array(
             '/' => 'Controladores\Api\HomeControlador',
             '/test' => 'Controladores\Api\TestControlador',
-            '/usuarios' => 'Controladores\Api\UsuariosControlador'
+            '/usuarios' => 'Controladores\Api\UsuariosControlador',
+            '/meli' => 'Controladores\Api\MeliControlador'
         );
+    }
+
+    public function serviciosRegistrados()
+    {
+        return "Servicios";
     }
 }

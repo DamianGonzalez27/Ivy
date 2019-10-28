@@ -13,10 +13,6 @@ class Kernel
     
     public function run()
     {
-        if($_POST)
-        {
-            return $_POST;
-        }
         $controller = $this->evalRuta($this->ruta);
         $response = new $controller;
         return $response->index();
@@ -25,7 +21,6 @@ class Kernel
 
     private function evalRuta($ruta)
     {
-        //return "test";
         $rutas = new Ruta;
         return $rutas->run($ruta);
     }

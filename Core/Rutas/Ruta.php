@@ -4,6 +4,13 @@ use Controladores\Register;
 
 class Ruta
 {
+    private $register;
+
+    public function __construct()
+    {
+        $this->register = new Register;
+    }
+
     public function run($ruta)
     {
         return $this->retornaRutas($ruta);
@@ -12,7 +19,10 @@ class Ruta
     private function retornaRutas($ruta)
     {
         $rutasRegistradas = $this->rutasRegistradas();
+        
+            
         return $this->evaluarRutas($ruta, $rutasRegistradas);
+       
     }
 
     private function evaluarRutas($ruta, $rutasRegistradas)
@@ -21,13 +31,11 @@ class Ruta
         
             return $rutasRegistradas[$ruta];
         
-        return "No fue posile encontrar la ruta, verifica la clase de configuracion";
-        
+        return "No fue posile encontrar la ruta, verifica la clase de configuracion"; 
     }
 
     private function rutasRegistradas()
     {
-        $registrador = new Register;
-        return $registrador->rutasRegistradas();
+        return $this->register->rutasRegistradas();
     }
 }
