@@ -11,11 +11,11 @@ class Kernel
         $this->ruta = $_SERVER['REQUEST_URI'];
     }
     
-    public function run()
+    public function run($data)
     {
         $controller = $this->evalRuta($this->ruta);
         $response = new $controller;
-        return $response->index();
+        return $response->index($data);
         
     }
 

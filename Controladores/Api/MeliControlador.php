@@ -2,15 +2,30 @@
 
 class MeliControlador
 {
-    public function index()
+    public function index($data)
     {
-        $response['hola'] = 'Este es un controlador';
-        $response['test'] = $this->test();
-        return $response;
+        $functionName = $data['function'];
+        return $this->$functionName();
+        
     }
 
     private function test()
     {
-        return "Esta es la funcion test";
+        return $response = array(
+            "Test" => "Hola meli :3" 
+        );
+    }
+    
+    private function meliFunction()
+    {
+        return $response = array(
+            "hola" => "Esto es un test"
+        );
+    }
+    private function functionTest(){
+        
+        return $response = array(
+            "Test" => "Esto es un test desde la funcion de test"
+        );
     }
 }

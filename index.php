@@ -18,15 +18,16 @@ require __DIR__.'/vendor/autoload.php';
 $app = new Core\Kernel;
 
 
-//Ejecucion de la aplicacion
-$test = $app->run();
-
 $data = json_decode(file_get_contents("php://input"), true);
+
+//Ejecucion de la aplicacion
+$test = $app->run($data);
+
+
 
 echo "<pre>";
 
 var_dump($test);
-var_dump($data);
 
 
 
