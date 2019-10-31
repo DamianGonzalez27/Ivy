@@ -2,27 +2,16 @@
 
 class Request
 {
+    private $data;
+
+    public function __contruct($contenidos)
+    {
+        $this->data = $contenidos;
+    }
     
-    private $request;
-
-    public function __construct()
+    public function traerParametros()
     {
-        //$this->request = new Request;
-    }
-
-    public function reviceRequest()
-    {
-        
-    }
-
-    public function processRequest()
-    {
-
-    }
-
-    public function responserequest()
-    {
-
+        return $this->data;
     }
 
 }

@@ -5,15 +5,17 @@ use Controladores\Register;
 class Ruta
 {
     private $register;
+    private $ruta;
 
     public function __construct()
     {
         $this->register = new Register;
+        $this->ruta = $_SERVER['REQUEST_URI'];
     }
 
-    public function run($ruta)
+    public function run()
     {
-        return $this->retornaRutas($ruta);
+        return $this->retornaRutas($this->ruta);
     }   
 
     private function retornaRutas($ruta)

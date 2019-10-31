@@ -2,12 +2,12 @@
 
 class HomeControlador
 {
-    public function index()
+    public function index($data)
     {
 
         $response['saluda'] = $this->saluda();
         $response['despidete'] = $this->despidete();
-        $response['test'] = $this->test();
+        $response['data'] = $data;
 
         return $response;
         
@@ -15,12 +15,12 @@ class HomeControlador
 
     private function saluda()
     {
-        return "Hola meli";
+        return "Hola";
     }
 
     private function despidete()
     {
-        return "Adios meli";
+        return "Adios";
     }
 
     private function test()

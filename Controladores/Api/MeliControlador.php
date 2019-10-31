@@ -9,6 +9,15 @@ class MeliControlador
         
     }
 
+    private function mergeResponse()
+    {
+        $response['test'] = $this->test();
+        $response['meliFunction'] = $this->meliFunction();
+        $response['testFunction'] = $this->functionTest();
+
+        return $response;
+    }
+
     private function test()
     {
         return $response = array(

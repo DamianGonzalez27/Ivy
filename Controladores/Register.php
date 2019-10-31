@@ -14,6 +14,8 @@ class Register
 
     public function serviciosRegistrados()
     {
-        return "Servicios";
+        return $servicios = array(
+            "Servicio" => "Servicios\Test\Servicio"
+        );
     }
 }

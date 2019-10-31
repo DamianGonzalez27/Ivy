@@ -4,25 +4,34 @@ use Core\Rutas\Ruta as Ruta;
 
 class Kernel
 {
-    private $ruta;
+    private $data;
+    private $headers;
+    private $cookies;
+    private $session;
 
     public function __construct()
     {
-        $this->ruta = $_SERVER['REQUEST_URI'];
+        
+        $this->data = json_decode(file_get_contents("php://input"), true);
     }
     
-    public function run($data)
+    public function run()
     {
-        $controller = $this->evalRuta($this->ruta);
+        $controller = $this->evalRuta();
         $response = new $controller;
-        return $response->index($data);
+        echo json_encode($response->index($this->data));
         
     }
 
-    private function evalRuta($ruta)
+    private function evalRuta()
     {
         $rutas = new Ruta;
-        return $rutas->run($ruta);
+        return $rutas->run();
     }
+    public function params()
+    {
+       return $this->data;
+    }
+
 
 }

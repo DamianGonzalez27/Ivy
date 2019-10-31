@@ -3,6 +3,10 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header
@@ -18,4 +22,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    #Headers
+    Access-Control-Allow-Origin: http://ivyframe.test
+
 </IfModule>
