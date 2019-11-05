@@ -7,7 +7,7 @@ use Core\Requests\Request;
 class Kernel
 {
     private $data;
-    //public $request;
+    public $request;
 
     public function __construct()
     {        
