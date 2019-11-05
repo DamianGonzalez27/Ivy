@@ -20,6 +20,9 @@
             "Modelos\\": "Modelos/",
             "Servicios\\": "Servicios/"
         }
+    },
+    "config": {
+        "optimize-autoloader": true
     }
     
 }
