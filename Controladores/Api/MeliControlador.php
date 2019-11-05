@@ -1,40 +1,41 @@
 <?php namespace Controladores\Api;
 
-class MeliControlador
+use Core\Controladores\Controlador;
+
+
+class MeliControlador extends Controlador
 {
     public function index($data)
     {
-        $functionName = $data['function'];
-        return $this->$functionName();
-        
+        return $this->run($data);
     }
 
-    private function mergeResponse()
+    public function mergeResponse($data)
     {
-        $response['test'] = $this->test();
-        $response['meliFunction'] = $this->meliFunction();
-        $response['testFunction'] = $this->functionTest();
+        $response['test'] = $this->test($data['param1']);
+        $response['meliFunction'] = $this->meliFunction($data['param2']);
+        $response['testFunction'] = $this->functionTest($data['param3']);
 
         return $response;
     }
 
-    private function test()
+    public function test($param)
     {
         return $response = array(
-            "Test" => "Hola meli :3" 
+            "Test" => $param 
         );
     }
     
-    private function meliFunction()
+    public function meliFunction($param)
     {
         return $response = array(
-            "hola" => "Esto es un test"
+            "hola" => $param['param1']
         );
     }
-    private function functionTest(){
+    public function functionTest($param){
         
         return $response = array(
-            "Test" => "Esto es un test desde la funcion de test"
+            "Test" => $param
         );
     }
 }

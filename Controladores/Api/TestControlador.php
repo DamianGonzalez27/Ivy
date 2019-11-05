@@ -1,13 +1,13 @@
 <?php namespace Controladores\Api;
 
-class TestControlador
+use Core\Controladores\Controlador;
+
+class TestControlador extends Controlador
 {
-    public function index()
+    public function index($data)
     {
-        $response = array(
-            "Mensaje" => "Esto es un mensaje desde el controlador de test"
-        );
+       
+    return $this->run($data);
         
-        return json_encode($response, true);
     }
 }
