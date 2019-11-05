@@ -1,17 +1,52 @@
 <?php namespace Core\Requests;
 
+
 class Request
 {
-    private $data;
 
-    public function __contruct($contenidos)
+    public $data;
+    public $test;
+
+    public function __construct($data)
     {
-        $this->data = $contenidos;
+        $this->data = $data;
     }
-    
-    public function traerParametros()
+   
+    public function test()
     {
-        return $this->data;
+        return $this->data;    
     }
+
+    public function verifyMethod($server)
+    {
+        switch($_SERVER['REQUEST_METHOD'])
+        {
+            case 'GET';
+
+                return  false;
+
+            break;
+
+            case 'POST':
+
+                return true;
+
+            break;
+
+            case 'PUT':
+
+                return false;
+            
+            break;
+
+            case 'DELETE':
+
+                return false;
+
+            break;
+        }
+    }
+
+
 
 }

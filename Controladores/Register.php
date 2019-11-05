@@ -12,10 +12,4 @@ class Register
         );
     }
 
-    public function serviciosRegistrados()
-    {
-        return $servicios = array(
-            "Servicio" => "Servicios\Test\Servicio"
-        );
-    }
 }

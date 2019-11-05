@@ -1,10 +1,13 @@
 <?php namespace Controladores\Api;
 
+use Controladores\Request\HomeRequest;
+
 class HomeControlador
 {
+    
     public function index($data)
     {
-
+        
         $response['saluda'] = $this->saluda();
         $response['despidete'] = $this->despidete();
         $response['data'] = $data;

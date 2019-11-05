@@ -13,16 +13,17 @@
 //Carga de la clase 'Autoload' de Composer
 require __DIR__.'/vendor/autoload.php';
 
-header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Origin: *');
 
 //Carga del core de funcionalidad del Framework
 $app = new Core\Kernel;
 
-
 //Ejecucion de la aplicacion
-$dev = $app->run();
+$app->run();
 
-//$test = $dev->traerParametros();
+
+
+
 
 
 
