@@ -7,12 +7,10 @@ use Core\Requests\Request;
 class Kernel
 {
     private $data;
-    public $request;
 
     public function __construct()
     {        
         $this->data = json_decode(file_get_contents("php://input"), true);
-        //$this->request = new Request($data);
     }
     
     public function run()
@@ -22,6 +20,11 @@ class Kernel
 
         echo $this->validarRespuesta($controller);      
         
+    }
+
+    public function controladores()
+    {
+        return $this->crearControlador();
     }
 
     private function crearControlador()
@@ -54,6 +57,8 @@ class Kernel
         $headers = new Request($this->data);
         return $headers->verifyMethod($_SERVER);
     }
+
+
 
 
 

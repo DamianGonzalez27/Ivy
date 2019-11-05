@@ -1,32 +1,28 @@
 <?php namespace Controladores\Api;
 
-use Controladores\Request\HomeRequest;
+use Core\Controladores\Controlador;
 
-class HomeControlador
+class HomeControlador extends Controlador
 {
-    
+
     public function index($data)
     {
-        
-        $response['saluda'] = $this->saluda();
-        $response['despidete'] = $this->despidete();
-        $response['data'] = $data;
-
-        return $response;
+       
+    return $this->run($data);
         
     }
 
-    private function saluda()
+    public function saluda()
     {
         return "Hola";
     }
 
-    private function despidete()
+    public function despidete()
     {
         return "Adios";
     }
 
-    private function test()
+    public function test()
     {
         return "Esto es un test";
     }

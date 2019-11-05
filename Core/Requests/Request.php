@@ -3,18 +3,9 @@
 
 class Request
 {
-
-    public $data;
-    public $test;
-
-    public function __construct($data)
+    public function getData($data)
     {
-        $this->data = $data;
-    }
-   
-    public function test()
-    {
-        return $this->data;    
+        return $data['params'];
     }
 
     public function verifyMethod($server)

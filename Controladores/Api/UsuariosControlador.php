@@ -1,13 +1,13 @@
 <?php namespace Controladores\Api;
 
-class UsuariosControlador
-{
-    public function index()
-    {
-        $response = array(
-            "Mensaje" => "Mensaje enviado desde los usuarios"
-        );
+use Core\Controladores\Controlador;
 
-        return json_encode($response);
+class UsuariosControlador extends Controlador
+{
+    public function index($data)
+    {
+       
+    return $this->run($data);
+        
     }
 }

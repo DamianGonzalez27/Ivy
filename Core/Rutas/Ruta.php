@@ -12,6 +12,7 @@ class Ruta
         $this->register = new Register;
         $this->ruta = $_SERVER['REQUEST_URI'];
     }
+   
 
     public function run()
     {
@@ -40,4 +41,6 @@ class Ruta
     {
         return $this->register->rutasRegistradas();
     }
+
+
 }
