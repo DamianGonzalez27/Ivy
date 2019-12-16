@@ -12,4 +12,11 @@ class Register
         );
     }
 
+    public function requestRegister()
+    {
+        return $requestRegister = array(
+            'HomeRequest' => 'Controladores\Request\Request'
+        );
+    }
+
 }

@@ -57,6 +57,7 @@ abstract class Controlador
     {
         return $this->request->getData($data);
     }
+    
 
 
 

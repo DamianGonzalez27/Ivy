@@ -29,7 +29,7 @@ class MeliControlador extends Controlador
     public function meliFunction($param)
     {
         return $response = array(
-            "hola" => $param['param1']
+            "hola" => $param
         );
     }
     public function functionTest($param){

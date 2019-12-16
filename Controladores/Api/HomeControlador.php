@@ -8,7 +8,7 @@ class HomeControlador extends Controlador
     public function index($data)
     {
        
-    return $this->run($data);
+        return $this->run($data);
         
     }
 
