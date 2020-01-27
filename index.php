@@ -9,14 +9,37 @@
  * crear aplicaciones escalables
  * 
  */
+/**
+ * @author DamianDev
+ * 
+ * IvyFrame
+ * Framework PHP OpenSource
+ * 
+ */
+
+
 
 //Carga de la clase 'Autoload' de Composer
 require __DIR__.'/vendor/autoload.php';
 
-//header('Access-Control-Allow-Origin: *');
+
+/**
+ * 
+ * Modulo de carga de kernel
+ * 
+ */
 
 //Carga del core de funcionalidad del Framework
 $app = new Core\Kernel;
+
+
+
+
+/**
+ * 
+ * Metodo de inicio y arranque de la aplicacion
+ * 
+ */
 
 //Ejecucion de la aplicacion
 $app->run();

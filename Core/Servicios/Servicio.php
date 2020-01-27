@@ -2,8 +2,8 @@
 
 class Servicios
 {
-    public function __construct()
+    public function init($data)
     {
-        
+        return $data;
     }
 }

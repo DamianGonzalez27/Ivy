@@ -24,7 +24,6 @@ class Request
             break;
 
             case 'POST':
-
                 return true;
 
             break;

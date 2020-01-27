@@ -1,14 +1,18 @@
 <?php namespace Core\Modelos;
+use BD;
 
-class Modelos
+class Modelo
 {
+    private $conexion;
+
     public function __construct()
     {
-
+        $this->conexion = new Mysql();
     }
 
-    public function makeModel($params)
+    public function test()
     {
-        return "modelo hecho";
+        return $this->conexion->abrir_conexion();
     }
+    
 }

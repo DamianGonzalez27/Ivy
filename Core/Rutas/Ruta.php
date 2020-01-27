@@ -21,20 +21,19 @@ class Ruta
 
     private function retornaRutas($ruta)
     {
-        $rutasRegistradas = $this->rutasRegistradas();
-        
-            
+        $rutasRegistradas = $this->rutasRegistradas();         
         return $this->evaluarRutas($ruta, $rutasRegistradas);
        
     }
 
     private function evaluarRutas($ruta, $rutasRegistradas)
     {
+        
         if(array_key_exists($ruta, $rutasRegistradas))
-        
+        {
             return $rutasRegistradas[$ruta];
-        
-        return "No fue posile encontrar la ruta, verifica la clase de configuracion"; 
+        }
+        return Errores::class; 
     }
 
     private function rutasRegistradas()
