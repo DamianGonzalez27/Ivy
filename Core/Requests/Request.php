@@ -3,6 +3,11 @@
 
 class Request
 {
+    public function run($data)
+    {
+        return $data;
+    }
+
     public function getData($data)
     {
         return $data['params'];
@@ -10,7 +15,7 @@ class Request
 
     public function verifyMethod($server)
     {
-        switch($_SERVER['REQUEST_METHOD'])
+        switch($server['REQUEST_METHOD'])
         {
             case 'GET';
 
@@ -19,7 +24,6 @@ class Request
             break;
 
             case 'POST':
-
                 return true;
 
             break;

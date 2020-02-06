@@ -1,66 +1,42 @@
 <?php namespace Core\Controladores;
 
-use Core\Kernel;
-use Core\Rutas\Ruta;
-use Core\Requests\Request;
-use Core\Controladores\ErroresControladores;
+use Core\Controladores\Instanciador;
+use Core\Controladores\PilaDeClases;
+use Core\Controladores\PilaFunciones;
 
-
-abstract class Controlador 
+class Controlador 
 {
-    private $ruta;
-    private $kernel;
-    private $request;
 
-    public function __construct()
+    /**
+     * @author DamianDev
+     * 
+     * Clase de separadora de controladores y parametros
+     * 
+     * La funcion init es invocada desde el kernel para la separacion de los controladores y 
+     * sus respectivos parametros.
+     * 
+     * Para que se consiga realizar la instancia correctamente es necesario que:
+     * 
+     * 1.- El nombre de la clase sea el mismo del nombre del documento a instanciar
+     * 
+     */
+
+    private $coleccionControladores;
+    private $pilaDeClases;
+    private $instanciador;
+    private $pilaFunciones;
+
+    public function __construct($data)
     {
-        $this->ruta = new Ruta;
-        $this->kernel = new Kernel;
-        $this->request = new Request;
-    }
-  
-    public function run($data)
-    {
-        
-        $clase = $this->kernel->controladores();
-        $function = $this->validarFunciones($data, $clase);
-        $funcionValidada = $this->validarError($function);
-        $datos = $this->validarParametros($data);
-        if(is_array($funcionValidada))
-        
-            return $funcionValidada;
-        
-        return $clase->$funcionValidada($datos);
-
-    }
-    
-    private function validarFunciones($data, $clase)
-    {
-        if(method_exists($clase, $data['function']))
-
-            return $data['function'];
-
-        return array('Error' => '001');
+        $this->coleccionControladores = $data['controllers'];
+        $this->instanciador = new Instanciador($this->coleccionControladores);
     }
 
-    private function validarError($function)
+    public function init()
     {
-        if(is_array($function))
-        {
-            $errores = new ErroresControladores;
-            return $errores->getError($function['Error']);
-        }
-        return $function;
+       return $this->instanciador->ejecutor();
     }
 
-    private function validarParametros($data)
-    {
-        return $this->request->getData($data);
-    }
-
-
-
-
-
-
+    public function __destruct()
+    {}
 }

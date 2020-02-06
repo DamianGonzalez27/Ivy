@@ -1,65 +1,30 @@
 <?php namespace Core;
 
-use Core\Rutas\Ruta as Ruta;
-use Core\Requests\Request;
+
+use Core\Controladores\Controlador;
 
 
 class Kernel
 {
     private $data;
+    private $controlador;
 
     public function __construct()
     {        
         $this->data = json_decode(file_get_contents("php://input"), true);
+        $this->controlador = new Controlador($this->data);
+
     }
     
     public function run()
     {
+        //Selector de controladores
+        $controller = $this->controlador->init();
+        echo "<pre>";var_dump($controller);
+        die();     
         
-        $controller = $this->crearControlador();
-
-        echo $this->validarRespuesta($controller);      
-        
-    }
-
-    public function controladores()
-    {
-        return $this->crearControlador();
-    }
-
-    private function crearControlador()
-    {
-        $controller = $this->evalRuta();
-        return $response = new $controller;
-    }
-
-    private function evalRuta()
-    {
-        $rutas = new Ruta;
-        return $rutas->run();
-    }
-    
-    private function validarRespuesta($response)
-    {
-       
-        if($this->getMethod())
-        {
-            return json_encode($response->index($this->data));
-        }
-        else
-        {
-            return "<h1>404 Not Found</h1>";
-        }
-    }
-
-    private function getMethod()
-    {
-        $headers = new Request($this->data);
-        return $headers->verifyMethod($_SERVER);
     }
 
 
-
-
-
+ 
 }
