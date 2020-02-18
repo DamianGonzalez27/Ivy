@@ -37,7 +37,7 @@ class Instanciador
         }
         return;
     }
-
+    //Agregando un comentario
     private function separadorFunciones($funciones)
     {
         $contadorFunciones = [];
