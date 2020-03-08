@@ -1,28 +1,28 @@
 <?php namespace Core;
 
 
-use Core\Controladores\Controlador;
+use Core\Client\Client;
 
 
 class Kernel
 {
     private $data;
-    private $controlador;
+    private $client;
+    private $headers;
 
     public function __construct()
     {        
         $this->data = json_decode(file_get_contents("php://input"), true);
-        $this->controlador = new Controlador($this->data);
-
+        $this->client = new Client($this->data);
+        $this->headers = getallheaders($data);
     }
     
     public function run()
     {
         //Selector de controladores
-        $controller = $this->controlador->init();
+        $controller = $this->client->init();
         echo "<pre>";var_dump($controller);
-        die();     
-        
+        die();
     }
 
 

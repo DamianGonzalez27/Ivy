@@ -1,5 +1,13 @@
-## IvyFrame
+# IvyFrame
 
-IvyFrame es un proyecto personal con la intencion de crear una herramienta que le permita a los desarrolladores
-reducir el codigo inescesario, escalar aplicaciones, y facilitar el desarrollo del Backend, provellendo de multiples beneficios al Frontend.
- 
+
+IvyFramework es un framework de desarrollo Backend escrito en <strong>PHP</strong> creado especialmente para el desarrollo de microservicios, dejando de lado las vistas al usuario y concentrandose en las operaciones del Back
+
+
+## DamianDev
+
+Cada fragmento de codigo esta diseñado para el rendimiento de funciones y tareas especificas, tomando como principal patron de diseño 
+
+- Abstract Factory
+
+Desarrollado para un unico Endpoint para todas las peticiones recibidas

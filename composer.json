@@ -16,13 +16,13 @@
     "autoload": {
         "psr-4": {
             "Core\\": "Core/",
-            "Controladores\\": "Controladores/",
-            "Modelos\\": "Modelos/",
-            "Servicios\\": "Servicios/"
+            "Service\\": "Service/"
         }
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
     }
-    
 }
