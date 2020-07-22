@@ -11,14 +11,12 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.4",
         "guzzlehttp/guzzle": "~6.0",
-        "illuminate/database": "7.x-dev",
         "symfony/http-foundation": "^5.2@dev",
         "filp/whoops": "2.*",
         "php-di/php-di": "dev-master",
         "vlucas/phpdotenv": "^5.1@dev",
-        "mongodb/mongodb": "^1.8@dev"
+        "mongodb/mongodb": "^1.7"
     },
     "autoload": {
         "psr-4": {
