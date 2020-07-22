@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": "^7.4",
         "guzzlehttp/guzzle": "~6.0",
         "illuminate/database": "7.x-dev",
         "symfony/http-foundation": "^5.2@dev",
