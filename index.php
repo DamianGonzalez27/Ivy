@@ -30,7 +30,7 @@ require __DIR__.'/vendor/autoload.php';
  */
 
 //Carga del core de funcionalidad del Framework
-$app = new Core\Kernel;
+$app = new Clarity\Kernel;
 
 
 

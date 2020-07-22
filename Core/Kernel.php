@@ -1,30 +1,35 @@
 <?php namespace Core;
 
-
-use Core\Controladores\Controlador;
-
+use Core\Validator;
+use Core\Genesis;
+use Symfony\Component\HttpFoundation\Request;
 
 class Kernel
 {
-    private $data;
-    private $controlador;
+    private $request;
+    private $genesis;
+    private $response;
+    private $validator;
 
     public function __construct()
-    {        
-        $this->data = json_decode(file_get_contents("php://input"), true);
-        $this->controlador = new Controlador($this->data);
-
+    {
+        $this->request = Request::createFromGlobals();
     }
-    
     public function run()
     {
-        //Selector de controladores
-        $controller = $this->controlador->init();
-        echo "<pre>";var_dump($controller);
-        die();     
+        $this->validator = Validator::getValidador($this->request);
         
+        if($this->validator->getStatus() == 200)
+        {
+            $this->genesis = Genesis::getGenesis($this->validator);
+
+            $response = $this->genesis->getResponse();
+
+            $response->getContent();
+        }
+
+        $this->validator->setResponse();
+
+        echo $this->validator->getResponse()->getContent();
     }
-
-
- 
 }

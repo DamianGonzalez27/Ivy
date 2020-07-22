@@ -1,8 +1,8 @@
 {
-    "name": "vendor/ivy-frame",
-    "description": "Paquete de dependencias de IvyFrame",
+    "name": "damiandev/ivy",
+    "description": "Framework de desarrollo PHP diseñado para creacion de microservicios",
     "type": "project",
-    "license": "GNU",
+    "license": "MIT",
     "authors": [
         {
             "name": "DamianDev",
@@ -11,18 +11,24 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "illuminate/database": "7.x-dev",
+        "symfony/http-foundation": "^5.2@dev",
+        "filp/whoops": "2.*",
+        "php-di/php-di": "dev-master",
+        "vlucas/phpdotenv": "^5.1@dev",
+        "mongodb/mongodb": "^1.8@dev"
     },
     "autoload": {
         "psr-4": {
-            "Core\\": "Core/",
-            "Controladores\\": "Controladores/",
-            "Modelos\\": "Modelos/",
-            "Servicios\\": "Servicios/"
+            "App\\": "App/",
+            "Core\\": "Core/"
         }
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
     }
-    
 }
