@@ -14,8 +14,6 @@ Esto te creara la carpeta nombre_proyecto, la cual contendra todo el codigo nece
 
 ## Entornos de desarrollo y produccion
 
-Para poder ejecutar aplicaciones Ivy es necesario tener en cuenta una serie de conceptos, los cuales son:
-
 ### Servidor
 
 El servidor es el equipo de computo en el que se ejecuta el programa, en terminos comunes: es la maquina en donde se ejecutan nuestros scripts php, en terminos de desarrollo lo podriamos comparar con el localhost.
@@ -26,7 +24,23 @@ Un servidor web es un programa informatico que se encarga de procesar una aplica
 
 En ambos casos es recomendable que si el servidor que se usará, es una instalacion limpia de alguno de estos, debemos configurar un ``Virtual Host`` para que este apunte a la carpeta ``Public/`` de nuestro proyecto Ivy.
 
-### Peticiones (Requests)
+### Peticiones (Request) y Respuestas (Response)
+
+La comunicacion HTTP se basa en un modelo de solicitud/respuesta, de modo que hay dos tipos de solicitud hacia un servidor de informacion. Ambos mensajes contienen en una linea de entrada, una linea de salida y en ocaciones los mensajes contienen un cuerpo del mensaje. 
+
+Estos objetos son interptretados por nuestro servidor web y son procesadas estas peticiones en el equipo de computo que recibe esta peticion.
+
+La linea de salida o linea de peticion, siempre es la primeta linea del mensaje y contiene 3 campos:
+
+- Un metodo HTTP
+- Un identificador universal de recursos (URI)
+- Una version del protocolo HTTP
+
+Aunque existen varios metodos HTTP los mas usados son GET y POST. Tradicionalmente el metodo GET se usa para obtener un recurso en el servidor indicado en el campo URI y el metodo POST es usado para enviar explisitamente informacion al servidor. Este protocolo de intercabio de informacion ha sido la base de la construccion web actual y es algo que debemos tener bien en mente al momento de crear aplicaciones Ivy.
+
+### Consideraciones
+
+AL momento de desarrollar aplicaciones Ivy es importante tener en cuenta que la comunicacion y la construccion de la logica esta basada en ese intercambio de informacion entre el cliente y el servidor. Ivy nos permite crear aplicaciones robustas y altamente escalables al cambiar el patron de diseño tradicional **MVC** por **Abstract Factory**.
 
 ## Algunos entornos de desarrollo compatibles
 
