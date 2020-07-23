@@ -1,7 +1,7 @@
 {
     "name": "damiandev/ivy",
     "description": "Framework de desarrollo PHP diseñado para creacion de microservicios",
-    "type": "library",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
