@@ -106,7 +106,7 @@ Sigueme en mis redes sociales:
 - [Facebook](https://www.facebook.com/DamianGonzalezDev)
 - [Twitter](https://twitter.com/DamianDev1)
 - [Linkedin](https://www.linkedin.com/in/damiangonzalezdev/)
-- [Youtube]("https://www.youtube.com/channel/UCS2RPa81nBPQAiUFjmy2aWA?view_as=subscriber)
+- [Youtube](https://www.youtube.com/channel/UCS2RPa81nBPQAiUFjmy2aWA?view_as=subscriber)
 
 
 Visita mi web
