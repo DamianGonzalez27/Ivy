@@ -9,7 +9,7 @@
             "email": "ing.gonzaleza@outlook.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "guzzlehttp/guzzle": "~6.0",
         "symfony/http-foundation": "^5.2@dev",
