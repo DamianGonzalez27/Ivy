@@ -11,10 +11,31 @@ class Kernel
     private $response;
     private $validator;
 
+    /**
+     * @author DamianDev <damian27goa@gmail.com>
+     * 
+     * Clase que inicializa la aplicacion
+     */
     public function __construct()
     {
         $this->request = Request::createFromGlobals();
     }
+    /**
+     * El metodo Run es el encargado de ejecutar la aplicacion. 
+     * 
+     * Comienza creando una instancia del metodo validador, el cual tiene la responsabilidad
+     * de evaluar las cabeceras y el cuerpo de la peticion recibida. 
+     * 
+     * Se evalua la clase validador en la primera capa de abstraccion en donde se evalua 
+     * un status 200 de la aplicacion, lo cual es un indicador de que la peticion es valida,
+     * si la peticion no es valida retorna un Response al cliente con el mensaje de error 
+     * en formato JSON y los headers.
+     * 
+     * Si la peticion es valida se crea una instancia de la clase Genesis la cual es la 
+     * clase que se encarga de devolvernos una instancia de response personalizada, dando
+     * inicio a la segunda capa de abstraccion.
+     * 
+     */
     public function run()
     {
         $this->validator = Validator::getValidador($this->request);
@@ -27,9 +48,11 @@ class Kernel
 
             $response->getContent();
         }
+        else 
+        {
+            $this->validator->setResponse();
 
-        $this->validator->setResponse();
-
-        echo $this->validator->getResponse()->getContent();
+            echo $this->validator->getResponse()->getContent();
+        }
     }
 }

@@ -8,6 +8,15 @@ class Genesis
 
     protected $validator;
 
+    /**
+     * @author DamianDev <damian27goa@gmail.com>
+     * 
+     * La clase Genesis tiene el unico objetio de instanciar la clase cliente y retornar
+     * los resultados obtenidos de ella.
+     * 
+     * [Singleton]
+     * 
+     */
     private function __construct($validator)
     {
         $this->validator = $validator;

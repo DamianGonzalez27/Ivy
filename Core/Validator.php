@@ -4,14 +4,22 @@ use Symfony\Component\HttpFoundation\JsonResponse as Response;
 
 class Validator
 {
+    /**
+     * @author DamianDev <damian27goa@gmail.com>
+     * 
+     * Clase validadora de Requests [Singleton]
+     * 
+     */
 
     private static $object;
     
+    public $content = [];
+    public $value = 'aplication/Ivy';
+
     private $response;
     private $error;
     private $request;
     private $errors = [];
-    public $content = [];
     private $params;
     
     protected $apiKey;
@@ -19,13 +27,14 @@ class Validator
     protected $method;
     protected $endpoint;
     protected $status;
-    protected $value = 'aplication/melisa';
+
     protected $paramRequired = [
         'apiKey' => true,
         'user' => true, 
         'method' => true, 
         'endpoint' => true
         ];
+
     protected $errorList = [
         0 => [
             'key' => 'auth',
@@ -104,12 +113,13 @@ class Validator
         }
         return null;
     }
+
+    // Metodos getters de la aplicacion
+
     public function getRequest()
     {
         return $this->request;
     }
-
-    // Metodos getters de la aplicacion
     public function getStatus()
     {
         return $this->status;
@@ -153,7 +163,6 @@ class Validator
         $this->status = $status;
     }
 
-    // Funciones privadas de uso exclusivo de la clase validadora
     private function validateIssetFunction($headers, $eval)
     {
         if(!isset($headers[$eval]))

@@ -2,5 +2,8 @@
 
 interface FactoryEndpointsInterface
 {
-    public function CursosActions($validator);
+    /**
+     * Esta es una interfaz que nos ayuda a implementar los metodos de registro
+     */
+    public function UserActions($validator);
 }
