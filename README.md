@@ -12,6 +12,21 @@ Es muy sencillo, actualmente Ivy se encuentra en su primer realease y esta en lo
 
 Esto te creara la carpeta nombre_proyecto, la cual contendra todo el codigo necesario para comenzar una aplicacion Ivy sencilla. 
 
+> **Nota:** Es muy importante que despues de crear el proyecto se cree un documento ``.env`` con las siguientes constantes
+> 
+> APP_NAME 
+>
+> DB_HOST
+> 
+> DB_DATABASE
+> 
+> DB_USERNAME
+> 
+> DB_PASSWORD
+>
+> Las cuales son las variables globales de configuracion para Eloquent
+
+
 ## Entornos de desarrollo y produccion
 
 ### Servidor
