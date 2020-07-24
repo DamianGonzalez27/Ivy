@@ -1,6 +1,8 @@
 <?php namespace App\Objects;
 
 use Core\Actions\ActionsAbstract;
+
+use App\Models\User;
 // use Core\Validators\Validators;
 
 class UserActions extends ActionsAbstract
@@ -19,8 +21,18 @@ class UserActions extends ActionsAbstract
     }
     public function Example()
     {
+        $usuario = User::create([
+            'nombre' => 'Damian',
+            'apellidos' => 'Gonzalez'
+        ]);
+
         $response = [
-            'message' => 'Hello world'
+            'message' => 'Usuario creado',
+            'user' => [
+                'id' => $usuario->id,
+                'nombre' => $usuario->nombre,
+                'apellidos' => $usuario->apellidos
+            ]
         ];
         return $this->run($response);
     }

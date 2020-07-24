@@ -10,7 +10,7 @@
 require_once "../vendor/autoload.php";
 
 // Incluimos las librerias de inicio
-include_once "../Paackages/Charger.php";
+include_once "../Packages/Charger.php";
 
 // Iniciamos la aplicacion
 $app = new \Core\Kernel;

@@ -16,7 +16,8 @@
         "symfony/http-foundation": "^5.2@dev",
         "filp/whoops": "2.*",
         "php-di/php-di": "dev-master",
-        "vlucas/phpdotenv": "^5.1@dev"
+        "vlucas/phpdotenv": "^5.1@dev",
+        "illuminate/database": "^7.21"
     },
     "autoload": {
         "psr-4": {
