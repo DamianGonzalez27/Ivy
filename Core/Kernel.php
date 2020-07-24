@@ -38,7 +38,6 @@ class Kernel
      */
     public function run()
     {
-        //echo "<pre>";var_dump($_ENV);die();
         $this->validator = Validator::getValidador($this->request);
         
         if($this->validator->getStatus() == 200)

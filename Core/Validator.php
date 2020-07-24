@@ -148,7 +148,7 @@ class Validator
     // Metodos setters de la aplicacion
     public function setResponse()
     {
-        $this->response = (new Response($this->content, $this->status, ['Content-type' => 'melisa/aplication']));
+        $this->response = (new Response($this->content, $this->status, ['Content-Type' => $this->value]));
     }
     public function setContent($content)
     {
