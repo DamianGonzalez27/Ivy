@@ -1,4 +1,4 @@
-<?php namespace Core\Actions;
+<?php namespace Core\Abstracts;
 
 abstract class ActionsAbstract
 {
@@ -19,7 +19,7 @@ abstract class ActionsAbstract
     public function __construct($validator)
     {
         $this->validator = $validator;
-        $this->params = json_decode($this->validator->getParams(), true);   
+        $this->params = $this->validator->getParams();   
     }
 
     public function run($content)

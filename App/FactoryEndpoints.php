@@ -1,9 +1,9 @@
 <?php namespace App;
 
 use App\Interfaces\FactoryEndpointsInterface;
-use App\Objects\UserActions;
+use App\Objects\InitActions;
 
-class FactoryEndpoints implements FactoryEndpointsInterface
+class FactoryEndpoints 
 {
     /**
      * @author DamianDev <damian27goa@gmail.com>
@@ -16,12 +16,12 @@ class FactoryEndpoints implements FactoryEndpointsInterface
      * 
      * Cada nuevo Endpoint debe ser registrado en el arreglo de endpoints y en la interfaz
      */
-    public $endpoints = [
-        'UserActions' => true
-    ];
+
+    public $publicPath = __DIR__.'/';
+
     
-    public function UserActions($validator)
+    public function InitActions($validator)
     {
-        return new UserActions($validator);
+        return new InitActions($validator);
     }
 }

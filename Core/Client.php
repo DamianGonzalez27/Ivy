@@ -32,33 +32,12 @@ class Client extends FactoryEndpoints
     public function run()
     {
         $method = $this->getMethod();
-        $endpoint = $this->endpoint;
         
-        if(array_key_exists($this->endpoint, $this->endpoints))
-        {
-            $element = $this->$endpoint($this->validator);
-            if(method_exists($element, $method))
-            {
-                return $element->$method();
-            }
-            $this->validator->setStatus(404);
+        $endpoint = $this->endpoint;
 
-            $this->validator->setContent(8);
+        $element = $this->$endpoint($this->validator);
 
-            $this->validator->setResponse();
-
-            return $this->validator->getResponse();
-        }
-        else
-        {
-            $this->validator->setStatus(404);
-
-            $this->validator->setContent(7);
-            
-            $this->validator->setResponse();
-
-            return $this->validator->getResponse();
-        }
+        return $element->$method();
     }
 
     public function getMethod()

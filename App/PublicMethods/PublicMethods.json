@@ -1,0 +1,16 @@
+{
+    "InitActions": {
+        "InitMethod": {
+        "public": true,
+            "array" : {
+                "test": "string",
+                "test2": "integer",
+                "test3": {
+                    "test" : "string"
+                }
+            },
+            "string": "String",
+            "integer" : "int"
+        }
+    }
+}
