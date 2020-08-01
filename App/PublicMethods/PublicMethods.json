@@ -3,13 +3,14 @@
         "InitMethod": {
         "public": true,
             "array" : {
-                "test": "string",
-                "test2": "integer",
-                "test3": {
-                    "test" : "string"
+                "string": "string",
+                "integer": "integer",
+                "array": {
+                    "string" : "string",
+                    "integer": "int"
                 }
             },
-            "string": "String",
+            "string": "string",
             "integer" : "int"
         }
     }
