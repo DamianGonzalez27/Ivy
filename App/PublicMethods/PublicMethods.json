@@ -2,14 +2,7 @@
     "InitActions": {
         "InitMethod": {
         "public": true,
-            "array" : {
-                "string": "string",
-                "integer": "integer",
-                "array": {
-                    "string" : "string",
-                    "integer": "int"
-                }
-            },
+            "array" : {},
             "string": "string",
             "integer" : "int"
         }

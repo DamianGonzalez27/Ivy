@@ -20,7 +20,9 @@ class Validator
     
     public $content = [];
     public $headers = [
-        'Content-Type' => 'aplication/Ivy'
+        'Content-Type' => 'aplication/Ivy',
+        'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PATCH, DELETE, PUT',
+        'Access-Control-Allow-Origin' => '*'
     ];
 
     private $response;

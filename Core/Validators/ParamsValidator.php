@@ -69,38 +69,41 @@ class ParamsValidator
     {
         if(is_array($rules))
         {
-            if(is_array($params[$ruleKey]))
+            if(!empty($rules))
             {
-                if(isset($params[$ruleKey]))
+                if(is_array($params[$ruleKey]))
                 {
-                    if(empty($params[$ruleKey]))
+                    if(isset($params[$ruleKey]))
                     {
-                        return [
-                            'error' => 'Error campo vacio',
-                            'campo' => $ruleKey
-                        ];  
+                        if(empty($params[$ruleKey]))
+                        {
+                            return [
+                                'error' => 'Error campo vacio',
+                                'campo' => $ruleKey
+                            ];  
+                        }
+                        else
+                        {
+                            $response = [];
+                            foreach($rules as $key => $rule)
+                            {
+                            $response[$ruleKey][$key] = $this->validateRule($key, $rule, $params[$ruleKey]);
+                            }
+                            return $response;
+                        }
                     }
                     else
                     {
-                        $response = [];
-                        foreach($rules as $key => $rule)
-                        {
-                        $response[$ruleKey][$key] = $this->validateRule($key, $rule, $params[$ruleKey]);
-                        }
-                        return $response;
+                        return [
+                            'error' => 'Campo inexistente',
+                            'campo' => $ruleKey
+                        ]; 
                     }
                 }
                 else
                 {
-                    return [
-                        'error' => 'Campo inexistente',
-                        'campo' => $ruleKey
-                    ]; 
+                    return $this->messageConstructor(gettype($params[$ruleKey]),'array', $ruleKey);
                 }
-            }
-            else
-            {
-                return $this->messageConstructor(gettype($params[$ruleKey]),'array', $ruleKey);
             }
         }
         else

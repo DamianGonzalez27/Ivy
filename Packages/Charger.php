@@ -23,3 +23,11 @@ $capsule->bootEloquent();
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
+
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+{
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, endpoint, method");
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    exit();
+}
