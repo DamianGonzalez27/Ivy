@@ -1,3 +1,5 @@
+<p align="center"><img src="https://cdn.pixabay.com/photo/2017/05/12/15/16/hexagon-2307350_960_720.png" width="100"></a></p>
+
 # Ivy
 
 Es un Framework de desarrollo orientado 100% al desarrollo de microservicios con PHP. Esta basado en el patron de diseño Abstract Factory, lo cual nos permite crear una clase PHP para cada enpoint. Esta diseñado para trabajar exclusivamente con data, mediente el manejo de Request y Response. 
