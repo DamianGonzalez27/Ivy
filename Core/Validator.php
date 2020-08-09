@@ -286,49 +286,63 @@ class Validator
             {
                 $methods = json_decode($this->publicMethods, true);
                 
-                if(!$methods[$this->endpoint][$this->method]['public'])
+                if(isset($methods[$this->endpoint]))
                 {
-                    $this->content[] = $this->errorList[8];
-                }
-                else
-                {
-                    if(!$methods[$this->endpoint][$this->method])
+                    if(isset($methods[$this->endpoint][$this->method]))
                     {
-                        if(!isset($headers['user']) && !isset($headers['apikey']))
+                        if(!$methods[$this->endpoint][$this->method]['public'])
                         {
-                            if(!isset($headers['token']))
-                            {
-                                $this->content[] = $this->errorList[10];
-                            }
-                            else
-                            {
-                                $this->validateCredentialsUser($headers['token'][0]);
-                            }
+                            $this->content[] = $this->errorList[8];
                         }
                         else
                         {
-                            if(isset($headers['token']) && (isset($headers['apikey']) or isset($headers['user'])))
+                            if(!$methods[$this->endpoint][$this->method])
                             {
-                                $this->content[] = $this->errorList[11];
-                            }
-                            else
-                            {
-                                $this->apiKey = $this->validateIssetFunction($headers, 'apikey');
-                                $this->user = $this->validateIssetFunction($headers, 'user');
-                    
-                                $this->validateStatus();
-                    
-                                if($this->status == 200)
+                                if(!isset($headers['user']) && !isset($headers['apikey']))
                                 {
-                                    $credentials = [
-                                        'apikey' => $this->apiKey,
-                                        'user' => $this->user
-                                    ];
-                                    $this->validateCredentialsUser($credentials);
+                                    if(!isset($headers['token']))
+                                    {
+                                        $this->content[] = $this->errorList[10];
+                                    }
+                                    else
+                                    {
+                                        $this->validateCredentialsUser($headers['token'][0]);
+                                    }
                                 }
+                                else
+                                {
+                                    if(isset($headers['token']) && (isset($headers['apikey']) or isset($headers['user'])))
+                                    {
+                                        $this->content[] = $this->errorList[11];
+                                    }
+                                    else
+                                    {
+                                        $this->apiKey = $this->validateIssetFunction($headers, 'apikey');
+                                        $this->user = $this->validateIssetFunction($headers, 'user');
+                            
+                                        $this->validateStatus();
+                            
+                                        if($this->status == 200)
+                                        {
+                                            $credentials = [
+                                                'apikey' => $this->apiKey,
+                                                'user' => $this->user
+                                            ];
+                                            $this->validateCredentialsUser($credentials);
+                                        }
+                                    }
+                                }  
                             }
-                        }  
+                        }
                     }
+                    else
+                    {
+                        $this->content[] = $this->errorList[8];    
+                    }
+                }
+                else
+                {
+                    $this->content[] = $this->errorList[7];
                 }
             }
             else
