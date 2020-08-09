@@ -1,4 +1,4 @@
-<p align="center"><img src="Ivy.png" width="100"></a></p>
+<p align="center"><img src="Ivy.png" width="300"></a></p>
 
 # Ivy
 
