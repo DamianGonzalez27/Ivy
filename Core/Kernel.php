@@ -52,7 +52,7 @@ class Kernel
         {
             $this->validator->setResponse();
 
-            echo $this->validator->getResponse()->getContent();
+            $this->validator->getResponse()->getContent();
         }
     }
 }
