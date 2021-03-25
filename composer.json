@@ -1,6 +1,6 @@
 {
     "name": "damiandev/ivy",
-    "description": "Framework de desarrollo PHP diseñado para creacion de microservicios",
+    "description": "Framework de desarrollo PHP diseñado para creación de microservicios",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -17,7 +17,11 @@
         "filp/whoops": "2.*",
         "php-di/php-di": "dev-master",
         "vlucas/phpdotenv": "^5.1@dev",
-        "illuminate/database": "^7.21"
+        "illuminate/database": "^7.21",
+        "zircote/swagger-php": "^3.1",
+        "league/plates": "^3.4",
+        "maximebf/debugbar": "^1.16",
+        "doctrine/orm": "^2.8"
     },
     "autoload": {
         "psr-4": {
@@ -26,7 +30,8 @@
         }
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "bin-dir": "bin"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",

@@ -1,0 +1,8 @@
+{
+    "mailer": {
+        "class": "\\App\\Services\\Mailer",
+        "construct": {
+            "host": "smtp.hostinger.com"
+        }
+    }
+}

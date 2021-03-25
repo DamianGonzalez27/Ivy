@@ -1,420 +1,303 @@
 <?php namespace Core;
 
-use App\Models\Users;
-use App\FactoryEndpoints;
-use Core\Validators\UserValidator;
-use Core\Actions\UserActions;
-use Core\Validators\ParamsValidator;
-use Symfony\Component\HttpFoundation\JsonResponse as Response;
+/**
+ * Esta clase tiene la responsabilidad de identificar errores en los request
+ */
+use Symfony\Component\HttpFoundation\Request;
 
 class Validator
 {
-    /**
-     * @author DamianDev <damian27goa@gmail.com>
-     * 
-     * Clase validadora de Requests [Singleton]
-     * 
-     */
+    private Request $request;
 
-    private static $object;
-    
-    public $content = [];
-    public $headers = [
-        'Content-Type' => 'aplication/Ivy',
-        'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PATCH, DELETE, PUT',
-        'Access-Control-Allow-Origin' => '*'
-    ];
-
-    private $response;
-    private $error;
-    private $request;
     private $errors = [];
-    private $params;
-    
-    protected $apiKey;
-    protected $user;
-    protected $token;
-    protected $method;
-    protected $endpoint;
-    protected $endpoints;
-    protected $status;
-    protected $publicMethods;
-    protected $validateParamsRulesPath;
-    
-    protected $paramRequired = [
-        'apiKey' => true,
-        'user' => true, 
-        'method' => true, 
-        'endpoint' => true
-        ];
 
-    protected $errorList = [
-        0 => [
-            'key' => 'auth',
-            'error' => 200,
-            'legend' => 'Aceeso autorizado'
+    private $status = 200;
 
-        ],
-        1 => [
-            'key' => 'apiKey',
-            'error' => 401,
-            'legend' => 'Api-key es requerido'
+    private $typeResponse = 'json';
 
-        ],
-        2 => [
-            'key' => 'user',
-            'error' => 401,
-            'legend' => 'User es requerido'
+    private $method;
 
-        ],
-        3 => [
-            'key' => 'method',
-            'error' => 401,
-            'legend' => 'Method es requerido'
+    private $path = [];
 
-        ],
-        4 => [
-            'key' => 'endpoint',
-            'error' => 401,
-            'legend' => 'Endpoint es requerido'
+    private $controller;
 
-        ],
-        5 => [
-            'key' => 'user-not-exist',
-            'error' => 401,
-            'legend' => 'El usuario no existe'
+    private $function;
 
-        ],
-        6 => [
-            'key' => 'not-credentials',
-            'error' => 404,
-            'legend' => 'Credenciales incorrectas'
+    private $access;
 
-        ],
-        7 => [
-            'key' => 'endpoint-not-exists',
-            'error' => 404,
-            'legend' => 'El endpoint no existe'
+    private $routeRules = [];
 
-        ],
-        8 => [
-            'key' => 'method-not-exists',
-            'error' => 404,
-            'legend' => 'El method no existe'
+    private $optionsEndpoint = [];
 
-        ],
-        9 => [
-            'key' => 'params-not-valid',
-            'error' => 404,
-            'legend' => 'Los parametros son incorrectos'
+    private $methodOptions = [];
 
-        ],
-        10 => [
-            'key' => 'no-autentication-params',
-            'error' => 404,
-            'legend' => 'No existen parametros de autenticacion'
-        ],
-        11 => [
-            'key' => 'replicate-params',
-            'error' => 404,
-            'legend' => 'La autenticacion no es posible con mas de una forma de autorizacion'
-        ],
-        12 => [
-            'key' => 'token-necesary',
-            'error' => 401,
-            'legend' => 'Es necesario el uso del parametro token'
-        ],
-        13 => [
-            'key' => 'logout-success',
-            'error' => 404,
-            'legend' => 'Logout exitoso, hasta pronto'
-        ]
-    ];
+    protected $routes;
 
-    private function __construct($request)
+    public function __construct(Request $request, $routes)
     {
-        $factory = new FactoryEndpoints;
-        $this->publicMethods = file_get_contents($factory->publicPath.'PublicMethods/PublicMethods.json');
-        $this->validateParamsRulesPath = $factory->publicPath;
-        $this->request = $request;
-        $this->params = json_decode($request->getContent(), true);
-        $this->method = $this->validateIssetFunction($request->headers->all(), 'method');
-        $this->endpoint = $this->validateIssetFunction($request->headers->all(), 'endpoint');
-        $this->validateInit();
+        $this->request= $request;
+
+        $this->method = $request->server->get('REQUEST_METHOD');
+
+        $this->path = explode("/", $request->getPathInfo());
+
+        $this->routes = $routes;
     }
 
-
-    public static function getValidador($request)
+    public function validate()
     {
-        if(!self::$object)
+        if($this->path[1] == 'api')
+            return true;
+        
+        ($this->path[1] == "") ? $this->path[1] = "/" : $this->path[1] = $this->path[1];
+
+        if(isset($this->routes[$this->method]['routes'][$this->path[1]]))
+            return $this->prepareResponseParams();
+
+        return false;
+    }
+
+    public function validateApi($endpoints)
+    {
+        for($i = 0; $i<count($endpoints); $i++)
         {
-           return self::$object = new self($request);
+            if($endpoints[$i]['name'] == $this->path[2])
+                $this->setOptionsEndpoint($endpoints[$i]['options']);
         }
-        return null;
+
+        if(empty($this->getOptionsEndpoint()))
+            return $this->prepareApiResponseErrors('Endpoint is not exists');
+
+        if(!isset($this->getOptionsEndpoint()['methods'][$this->request->request->get('_method')]))
+            return $this->prepareApiResponseErrors('Method is not exists');
+        
+        $this->setController(
+            $this->getOptionsEndpoint()['class']
+        );
+        $this->setMethodOptions(
+            $this->getOptionsEndpoint()['methods'][$this->request->request->get('_method')]
+        );
+        return true;
     }
 
+    private function prepareApiResponseErrors($error)
+    {
+        $this->setErrors(['error' => $error]);
 
+        return false;
+    }
 
+    private function prepareResponseParams()
+    {   
+        $this->setController($this->routes[$this->method]['controller']);
+        $this->setFunction($this->routes[$this->method]['routes'][$this->path[1]]['function']);
+        $this->setAccess($this->routes[$this->method]['routes'][$this->path[1]]['access']);
+        $this->setRouteRules($this->routes[$this->method]['routes'][$this->path[1]]);
+        $this->setTypeResponse('html');
+        return true;
+    }
+
+    /**
+     * Get the value of request
+     */ 
     public function getRequest()
     {
         return $this->request;
     }
+
+    /**
+     * Get the value of errors
+     */ 
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * Set the value of errors
+     *
+     * @return  self
+     */ 
+    public function setErrors($errors)
+    {
+        $this->errors = $errors;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
     public function getStatus()
     {
         return $this->status;
     }
-    public function getResponse()
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus($status)
     {
-        return $this->response->send();
+        $this->status = $status;
+
+        return $this;
     }
-    public function getEndpoint()
+
+    /**
+     * Get the value of typeResponse
+     */ 
+    public function getTypeResponse()
     {
-        return $this->endpoint;
+        return $this->typeResponse;
     }
+
+    /**
+     * Set the value of typeResponse
+     *
+     * @return  self
+     */ 
+    public function setTypeResponse($typeResponse)
+    {
+        $this->typeResponse = $typeResponse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of path
+     */ 
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Get the value of method
+     */ 
     public function getMethod()
     {
         return $this->method;
     }
-    public function getContent()
-    {
-        return $this->content;
-    }
-    public function getParams()
-    {
-        return $this->params;
-    }
 
-
-
-    public function setResponse()
+    /**
+     * Get the value of controller
+     */ 
+    public function getController()
     {
-        $this->response = (new Response($this->content, $this->status, $this->headers));
-    }
-    public function setContent($content)
-    {
-        $this->content = $this->errorList[$content];
-    }
-    public function setAllContent($content)
-    {
-        $this->content = $content;
-    }
-    public function setStatus($status)
-    {
-        $this->status = $status;
+        return $this->controller;
     }
 
-
-    private function validateInit()
+    /**
+     * Set the value of controller
+     *
+     * @return  self
+     */ 
+    public function setController($controller)
     {
-        if(!is_null($this->endpoint))
-        {
-            if($this->endpoint != 'Logout')
-            {
-                $this->validateStatus();
-                $this->validateUser();
-                $this->validateStatus();
-                $this->validateParams();
-                $this->validateStatus();
-            }
-            else
-            {
-                $this->validateStatus();
-                $this->validateUser();
-                $this->validateStatus();
-            }
-        }
-        else
-        {
-           $this->validateStatus();
-        }
+        $this->controller = $controller;
+
+        return $this;
     }
 
-    private function validateIssetFunction($headers, $eval)
+    /**
+     * Get the value of function
+     */ 
+    public function getFunction()
     {
-        if($eval == 'endpoint')
-        {
-            if(!isset($headers[$eval]))
-            {
-                $this->content[] = $this->errorList[4];
-            }
-            else
-            {
-                if($headers[$eval][0] != 'Logout')
-                {
-                    $endpoints = json_decode($this->publicMethods, true);
-    
-                    if(!isset($endpoints[$headers[$eval][0]]))
-                    {
-                        $this->content[] = $this->errorList[7];
-                    }
-    
-                    return $headers[$eval][0];
-                }
-                else
-                {
-                    return $headers[$eval][0]; 
-                }
-            }                     
-        }
-
-        else if(!isset($headers[$eval]))
-        {
-            if($eval == 'method')
-            {
-                $this->content[] = $this->errorList[3];
-            }
-            else if($eval == 'token')
-            {
-                $this->content[] = $this->errorList[10];
-            }
-            return null;
-        }
-        else
-        {
-            return $headers[$eval][0];
-        }
-
-    }
-    private function validateUser()
-    {
-
-        $headers = $this->request->headers->all();
-
-        if($this->status == 200)
-        {
-            if($this->endpoint != 'Logout')
-            {
-                $methods = json_decode($this->publicMethods, true);
-                
-                if(isset($methods[$this->endpoint]))
-                {
-                    if(isset($methods[$this->endpoint][$this->method]))
-                    {
-                        if(!$methods[$this->endpoint][$this->method]['public'])
-                        {
-                            $this->content[] = $this->errorList[8];
-                        }
-                        else
-                        {
-                            if(!$methods[$this->endpoint][$this->method])
-                            {
-                                if(!isset($headers['user']) && !isset($headers['apikey']))
-                                {
-                                    if(!isset($headers['token']))
-                                    {
-                                        $this->content[] = $this->errorList[10];
-                                    }
-                                    else
-                                    {
-                                        $this->validateCredentialsUser($headers['token'][0]);
-                                    }
-                                }
-                                else
-                                {
-                                    if(isset($headers['token']) && (isset($headers['apikey']) or isset($headers['user'])))
-                                    {
-                                        $this->content[] = $this->errorList[11];
-                                    }
-                                    else
-                                    {
-                                        $this->apiKey = $this->validateIssetFunction($headers, 'apikey');
-                                        $this->user = $this->validateIssetFunction($headers, 'user');
-                            
-                                        $this->validateStatus();
-                            
-                                        if($this->status == 200)
-                                        {
-                                            $credentials = [
-                                                'apikey' => $this->apiKey,
-                                                'user' => $this->user
-                                            ];
-                                            $this->validateCredentialsUser($credentials);
-                                        }
-                                    }
-                                }  
-                            }
-                        }
-                    }
-                    else
-                    {
-                        $this->content[] = $this->errorList[8];    
-                    }
-                }
-                else
-                {
-                    $this->content[] = $this->errorList[7];
-                }
-            }
-            else
-            {
-
-                if(!isset($headers['token']))
-                {
-                    $this->content[] = $this->errorList[12];
-                }
-                else
-                {
-                    $credentials = [
-                        'logout' => true,
-                        'token' => $headers['token'][0]
-                    ];
-                    $this->validateCredentialsUser($credentials);
-                }
-            }
-        }
-    }
-    
-    private function validateParams()
-    {
-        if(count($this->content)<1)
-        {
-            $paramsRules =  json_decode($this->publicMethods, true);
-
-            if(isset($paramsRules[$this->endpoint][$this->method]))
-            {
-                $paramsValidator = ParamsValidator::getValidator($this->params);
-
-                $paramsValidator->validate($paramsRules[$this->endpoint][$this->method]);
-
-                if($paramsValidator->status != 200)
-                {
-                    $this->errorList[9]['error_list'] = $paramsValidator->errors;
-                    $this->content[] = $this->errorList[9];
-                }
-            }
-        }
-    }
-    private function validateStatus()
-    {
-        if(count($this->content) >= 1)
-        {
-            $this->status = $this->content[0]['error'];
-        }
-        else
-        {
-            $this->status = 200;
-        }
+        return $this->function;
     }
 
-    private function validateCredentialsUser($credentials)
+    /**
+     * Set the value of function
+     *
+     * @return  self
+     */ 
+    public function setFunction($function)
     {
-        $userValidator = UserValidator::getValidator($credentials);
-        
-        if($userValidator->status != 200)
-        {
-            $this->errorList[6]['error_list'] = $userValidator->errors;
-            $this->content[] = $this->errorList[6];
-        }
-        else
-        {
-            if($this->endpoint != 'Logout')
-            {
-                $this->headers['token'] = $userValidator->headers;
-            }
-            else
-            {
-                $this->content[] = $this->errorList[13];
-            }            
-        }
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of access
+     */ 
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set the value of access
+     *
+     * @return  self
+     */ 
+    public function setAccess($access)
+    {
+        $this->access = $access;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of routeRules
+     */ 
+    public function getRouteRules()
+    {
+        return $this->routeRules;
+    }
+
+    /**
+     * Set the value of routeRules
+     *
+     * @return  self
+     */ 
+    public function setRouteRules($routeRules)
+    {
+        $this->routeRules = $routeRules;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of optionsEndpoint
+     */ 
+    public function getOptionsEndpoint()
+    {
+        return $this->optionsEndpoint;
+    }
+
+    /**
+     * Set the value of optionsEndpoint
+     *
+     * @return  self
+     */ 
+    public function setOptionsEndpoint($optionsEndpoint)
+    {
+        $this->optionsEndpoint = $optionsEndpoint;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of methodOptions
+     */ 
+    public function getMethodOptions()
+    {
+        return $this->methodOptions;
+    }
+
+    /**
+     * Set the value of methodOptions
+     *
+     * @return  self
+     */ 
+    public function setMethodOptions($methodOptions)
+    {
+        $this->methodOptions = $methodOptions;
+
+        return $this;
     }
 }

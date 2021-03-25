@@ -1,0 +1,40 @@
+{
+    "GET": {
+        "controller": "\\App\\Controllers\\PagesController",
+        "routes": {
+            "/": {
+                "function": "start",
+                "access": "public"
+            },
+            "login": {
+                "function": "login",
+                "access": "public"
+            },
+            "home":{
+                "function": "home",
+                "access": "private"
+            },
+            "docs":{
+                "function": "docs",
+                "access": "public"
+            }
+        }
+    },
+    "POST": {
+        "controller": "\\App\\Controllers\\AuthController",
+        "routes": {
+            "internalLogin": {
+                "data": {
+                    "user": "required",
+                    "password": "required"
+                },
+                "function": "login",
+                "access": "public"
+            },
+            "internalLogout": {
+                "function": "logout",
+                "access": "private"
+            }
+        }
+    }
+}

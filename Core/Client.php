@@ -1,49 +1,138 @@
 <?php namespace Core;
 
-use App\FactoryEndpoints;
-use App\Objects;
-
-class Client extends FactoryEndpoints
+use Core\Tokenizer;
+use Core\Bridges\RequestBridge;
+use Core\Factorys\FactoryEndpoints;
+use Core\Factorys\FactoryServices;
+use Symfony\Component\HttpFoundation\Request;
+class Client
 {
-    protected $validator;
-    protected $factory;
 
-    private $endpoint;
-    private $method;
+    private Tokenizer $tokenizer;
+
+    private $endpoints;
+
+    private Request $request;
+
+    private $statusResponse;
+
+    private $controller;
+
+    private $response;
+
+    private $clientResponse;
+
+    private $factoryEndpointResponse;
+
+    private $services;
+
+    private $servicesBridge;
+
+    private $requestBridge;
+    
+    public function __construct($endpoints, $controller,  Tokenizer $tokenizer, $services)
+    {
+        $this->endpoints = $endpoints;
+
+        $this->controller = $controller;
+
+        $this->tokenizer = $tokenizer;
+
+        $this->request = $tokenizer->getRequest();
+
+        $this->services = $services;
+    }
+
     /**
-     * @author DamianDev <damian27goa@gmail.com>
-     * 
-     * La clase cliente tiene como objetivo realizar la instanciacion y ejecucion del metodo 
-     * seleccionado dentro de los headers.
-     * 
-     * En esta capa de abstraccion se validan las clases o endpoints que se pueden instanciar
-     * Se valida que los metodos enviados por el cliente puedan ser invocados
-     * En el caso de que ocurra algun error con la peticion se regresa un Request con la descripcion.
-     * 
-     * En el caso de que no haya ocurrido ningun error se retorna el resultado del metodo solicitado
+     * Esta funcion tiene la responsabilidad de preparar una respuesta
+     *
+     * @return void
      */
-    public function __construct($validator)
+    public function execute()
     {
-        $this->validator = $validator;
-        $this->endpoint = $validator->getEndpoint();
-        $this->method = $validator->getMethod();
+        $this->makeRequestBridge();
+        $this->makeServices();
+        $this->makeEndpoint();
+        dd($this->factoryEndpointResponse);
+    }
+    
+    private function makeServices()
+    {
+        $services = new FactoryServices($this->services);
+
+        $this->servicesBridge = $services->getFactoryResponse();
     }
 
-    public function run()
+    private function makeEndpoint()
     {
-        $method = $this->getMethod();
+        $factoryEndpoint = new FactoryEndpoints($this->endpoints, $this->controller, $this->requestBridge, $this->servicesBridge);
+
+        $this->factoryEndpointResponse = $factoryEndpoint->getFactoryResponse();
+    }
+
+    private function makeRequestBridge()
+    {
+        $this->requestBridge = new RequestBridge($this->request);
+    }
+
+    private function filterResponse()
+    {
         
-        $endpoint = $this->endpoint;
-
-        $element = $this->$endpoint($this->validator);
-
-        return $element->$method();
     }
 
-    public function getMethod()
+    /**
+     * Get the value of statusResponse
+     */ 
+    public function getStatusResponse()
     {
-        return $this->method;
+        return $this->statusResponse;
     }
-    
-    
+
+    /**
+     * Get the value of controller
+     */ 
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * Set the value of controller
+     *
+     * @return  self
+     */ 
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of response
+     */ 
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * Get the value of clientResponse
+     */ 
+    public function getClientResponse()
+    {
+        return $this->clientResponse;
+    }
+
+    /**
+     * Set the value of clientResponse
+     *
+     * @return  self
+     */ 
+    public function setClientResponse($clientResponse)
+    {
+        $this->clientResponse = $clientResponse;
+
+        return $this;
+    }
 }

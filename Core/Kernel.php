@@ -2,14 +2,20 @@
 
 use Core\Validator;
 use Core\Genesis;
+use League\Plates\Engine;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class Kernel
 {
-    private $request;
-    private $genesis;
-    private $response;
-    private $validator;
+    private Request $request;
+    private Engine $templates;
+
+    private $apiParams;
+
+    private $services;
+
+    private $routes;
 
     /**
      * @author DamianDev <damian27goa@gmail.com>
@@ -19,6 +25,16 @@ class Kernel
     public function __construct()
     {
         $this->request = Request::createFromGlobals();
+
+        $this->templates = new Engine('../views');
+
+        $this->templates->loadExtension(new \League\Plates\Extension\URI($_SERVER['SERVER_NAME']));
+
+        $this->apiParams = json_decode(@\file_get_contents('../configs/api.json'), true);
+
+        $this->services = json_decode(@\file_get_contents('../configs/services.json'), true);
+
+        $this->routes = json_decode(@file_get_contents('../configs/routes.json'), true);
     }
     /**
      * El metodo Run es el encargado de ejecutar la aplicacion. 
@@ -38,21 +54,15 @@ class Kernel
      */
     public function run()
     {
-        $this->validator = Validator::getValidador($this->request);
+        $validator = new Validator($this->request, $this->routes);
+
+        if(!$validator->validate())
+        {
+            $response = new Response($this->templates->render('404'), 404);
+            $response->send();
+        }
+        $genesis = new Genesis($validator, $this->templates, $this->apiParams, $this->services);
         
-        if($this->validator->getStatus() == 200)
-        {
-            $this->genesis = Genesis::getGenesis($this->validator);
-
-            $response = $this->genesis->getResponse();
-
-            $response->getContent();
-        }
-        else 
-        {
-            $this->validator->setResponse();
-
-            $this->validator->getResponse()->getContent();
-        }
+        $genesis->response()->send();
     }
 }

@@ -1,134 +1,276 @@
-<p align="center"><img src="Ivy.png" width="300"></a></p>
+<p align="center">
+    <img src="Ivy.png" width="300">
+</p>
 
 # Ivy
+Ivy es un marco de trabajo especialmente diseñado para la creación de API's de una forma sencilla, flexible y sobre todo económica.
 
-Es un Framework de desarrollo orientado 100% al desarrollo de microservicios con PHP. Esta basado en el patron de diseño Abstract Factory, lo cual nos permite crear una clase PHP para cada enpoint. Esta diseñado para trabajar exclusivamente con data, mediente el manejo de Request y Response. 
+## Fundamentos
+--- 
+Ivy propone un paradigma simple para construir API's tomando como base el protocolo de comunicación ``HTTP`` creando un flujo de información simple para el acceso y manipulación de los recursos computacionales del lado del servidor. El objetivo de Ivy es poder crear puntos de acceso a partir de clases finales PHP y a su vez cada una de estas clases tienen una colección de metodos de ejecución y construcción para el cuerpo de la respuesta para el cliente.
 
-La vision de Ivy es poder facilitar la creacion de API's Ivy mediante la creacion de una clase que se encarge de procesar los metodos solicitados por el cliente
-
-## ¿Como empiezo a usarlo?
-
-Es muy sencillo, actualmente Ivy se encuentra en su primer realease y esta en los paquetes de composer, comenzar a usarlo es tan sencillo como teclear en tu terminal 
-
-``$ composer create-project damiandev/ivy nombre_proyecto``
-
-Esto te creara la carpeta nombre_proyecto, la cual contendra todo el codigo necesario para comenzar una aplicacion Ivy sencilla. 
-
-> **Nota:** Es muy importante que despues de crear el proyecto se cree un documento ``.env`` con las siguientes constantes
-> 
-> APP_NAME 
->
-> DB_HOST
-> 
-> DB_DATABASE
-> 
-> DB_USERNAME
-> 
-> DB_PASSWORD
->
-> Las cuales son las variables globales de configuracion para Eloquent
+___
+<strong>Nota: </strong> Es importante señalar que Ivy no trabaja bajo la arquitectura ```REST``` ya que tiene un enfoque 100% orientado a generar un estándar con respecto a la construcción de peticiones de entrada.
+___
 
 
-## Entornos de desarrollo y produccion
+## Estándar Ivy
+Ivy implementa un estándar en las peticiones de entrada usando la misma estructura para todas las peticiones, de esta forma podemos controlar de mejor manera la construcción de las peticiones y agregar información y acciones adicionales al flujo normal de Ivy.
 
-### Servidor
+### Sobre la URL
+Para poder interactuar con las aplicaciones Ivy es necesario hacerlo mediante una URL universal para cada punto final, esto nos permite seccionar nuestro sistema e identificar todas las entidades necesarias para cada caso. De esta forma tenemos una colección de puntos finales disponibles para ser consumidos y seccionados de acuerdo a un objetivo en particular.
 
-El servidor es el equipo de computo en el que se ejecuta el programa, en terminos comunes: es la maquina en donde se ejecutan nuestros scripts php, en terminos de desarrollo lo podriamos comparar con el localhost.
+#### Ejemplo: 
+ - https://localhost/api/clientes
+ - https://localhost/api/compras
+ - https://localhost/api/usuarios
 
-Cuando nos disponemos a desarrollar una aplicacion php, es muy comun que nos dispongamos a instalar una serie de herramientas que nos permiten comenzar con la programación de nuestra aplicación, es aqui cuando comenzamos a investigar en los entornos de desarrollo, y nos encontramos con varios programas informaticos.
+Como podemos observar tenemos un grupo de 3 puntos finales y cada uno de ellos agrupa una colección de metodos especificas de cada uno.
 
-Un servidor web es un programa informatico que se encarga de procesar una aplicacion y realizar conexiones bidireccionales o unidireccionales, sincronicas o asincronicas con el cliente, generando una respuesta en cualquier lenguaje o aplicacion, para este caso hare bastante enfasis en dos tecnologias importantes [Apache](https://httpd.apache.org) y [Nginx](https://www.nginx.com), servidores web con mucha documentacion y con un uso bastante expandido.
+### POST
+Ivy implementa un único verbo de comunicación del protocolo ```HTTP``` con el objetivo de reducir la complejidad de construir peticiones, en cambio deroga toda la responsabilidad de acceso e interacción al cuerpo de la petición.
 
-En ambos casos es recomendable que si el servidor que se usará, es una instalacion limpia de alguno de estos, debemos configurar un ``Virtual Host`` para que este apunte a la carpeta ``Public/`` de nuestro proyecto Ivy.
+### El cuerpo de la petición
+Ivy trabaja e implementa en todas las peticiones de entrada ```Content-Type: multipart/form-data```, lo cual nos permite controlar la información que es enviada y segmentar la petición de acuerdo al método especifico del punto final determinado por la ```URL``` de la petición.
 
-### Peticiones (Request) y Respuestas (Response)
+#### _method
+---
+Se trata de un parametro obligatorio de acceso, este es una representacion literal de los metodos disponibles dentro de cada punto final. Este parametro determina que acción sera ejecutada para la cada petición determinada.
 
-La comunicacion HTTP se basa en un modelo de solicitud/respuesta, de modo que hay dos tipos de solicitud hacia un servidor de informacion. Ambos mensajes contienen en una linea de entrada, una linea de salida y en ocaciones los mensajes contienen un cuerpo del mensaje. 
+#### _data
+---
+Se trata de un parametro opcional de la petición el cual contiene en formato ```json``` un arreglo con información importante para llevar a cabo la acción del método a consumir.
 
-Estos objetos son interptretados por nuestro servidor web y son procesadas estas peticiones en el equipo de computo que recibe esta peticion.
+#### _filters (beta)
+---
+Se trata de un parametro opcional de la petición el cual si se encuentra configurados aplicara un filtro determinado a la respuesta del método, estos pueden ser filtros de ordenamiento, búsqueda y selección.
 
-La linea de salida o linea de peticion, siempre es la primeta linea del mensaje y contiene 3 campos:
+#### Manejo de archivos
+---
+Ivy es capaz de manipular archivos enviados desde el cliente, para poder enviarlos es importante seguir la convención de los parametros del cuerpo de la petición.
 
-- Un metodo HTTP
-- Un identificador universal de recursos (URI)
-- Una version del protocolo HTTP
+#### Ejemplo: 
+--- 
+~~~
+_image_name_image_1
 
-Aunque existen varios metodos HTTP los mas usados son GET y POST. Tradicionalmente el metodo GET se usa para obtener un recurso en el servidor indicado en el campo URI y el metodo POST es usado para enviar explisitamente informacion al servidor. Este protocolo de intercabio de informacion ha sido la base de la construccion web actual y es algo que debemos tener bien en mente al momento de crear aplicaciones Ivy.
+_image_name_image_2
 
-### Consideraciones
+_document_pdf_name_document
 
-AL momento de desarrollar aplicaciones Ivy es importante tener en cuenta que la comunicacion y la construccion de la logica esta basada en ese intercambio de informacion entre el cliente y el servidor. Ivy nos permite crear aplicaciones robustas y altamente escalables al cambiar el patron de diseño tradicional **MVC** por **Abstract Factory**.
+_document_excel_name_document
+~~~
 
-## Algunos entornos de desarrollo compatibles
+## Primeros pasos
+Es importante señalar que Ivy implementa el patron de diseño ```Abstract Factory``` o ```Fabrica abstracta``` lo cual permite crear los puntos finales y servicios mediante un archivo de configuración en formato ```json```, mediante el cual Ivy realiza la creación de los puntos finales, configuración de parametros y aplicación de filtros. Esto documento también contiene información importante que puede ser consumida por medio del punto final docs siendo este el único método y endpoint que implementa el verbo ```HTTP GET```
 
-### [Laragon](https://laragon.org)
+### api.json
+---
 
-La carpeta raiz del proyecto debe estar localizada en la carpeta www de tu carpeta de instalacion laragon. Para mas informacion consulta la [documentacion oficial](https://laragon.org/docs/install.html).
+~~~
+{
+    "name": "Ivy Api",
+    "version": "1.0.0",
+    "url": "https://localhost:8000",
+    "endpoints": [
+        {
+            "name": "clientes",
+            "options": {
+                "class": "\\App\\Endpoints\\Clientes",
+                "methods": {
+                    "todos":{
+                        "function": "todos",
+                        "permissions": "CLIENTE_READ"
+                    },
+                    "all":{
+                        "function": "getUsers",
+                        "permissions": "CLIENTE_READ"
+                    },
+                    "single":{
+                        "function": "getUser", 
+                        "params": {
+                            "id": "required"
+                        },
+                        "permissions": "CLIENTE_READ"
+                    }
+                }
+            }
+        },
+        {
+            "name": "compras",
+            "options": {
+                "class": "\\App\\Actions\\Compras",
+                "methods": {
+                    "all":{
+                        "function": "getAll",
+                        "permissions": "BUY_READ"
+                    },
+                    "single":{
+                        "function": "getBuy", 
+                        "params": {
+                            "id": "required"
+                        },
+                        "permissions": "BUY_READ"
+                    }
+                }
+            }
+        }
+    ]
+}
+~~~
+Este documento contiene un arreglo que almacena el nombre, version y URL del API y una colección de puntos finales, cada punto final contiene el nombre del punto final y una lista de opciones.
 
-### [Valet](https://laravel.com/docs/7.x/valet)
+La lista de opciones de cada punto final contiene el ```namespace``` de la clase que se desea instanciar y una colección de métodos disponibles para consumo. 
 
-En el caso de estar usando el entorno de desarrollo valet ya sea en MacOS o en Linux, es importante realizar un link simbolico de la aplicacion dentro de la carpeta ``Public/`` del proyecto que has creado. Bastaria con situarte con la terminal dentro de la carpeta ``Public/`` y ejecutar:
+Cada método de consumo implementa 4 reglas de operación: 
 
-``$ valet link app_name``
+- function: Es el nombre de la función PHP a ejecutar (_method)
+- params: Son los parametros requeridos para ejecutar la función (_data)
+- permission: Se refiere a los permisos que debe tener un usuario para poder ejecutar la función
+- files: Se refiere al limite de ficheros que puede admitir Ivy
 
-Esto con la finalidad de hacer que la carpeta principal del servidor sea la carpeta ``Public/`` ejecutando el archivo ``index.php`` y las reglas contenidas en el archivo ``.htaccess``.
+### services.json
+--- 
+~~~
+{
+    "hostingerSMTP": {
+        "class": "\\App\\Services\\Hostinger",
+        "construct": {
+            "host": "smtp.hostinger.com",
+            "port": "430",
+            "user": "user",
+            "password": "123"
+        }
+    },
+    "firebaseClient": {
+        "class": "\\App\\Services\\Firebase",
+        "construct": {
+            "secret-key": "secret",
+            "site-key": "430"
+        }
+    },
+    "databaseA": {
+        "class": "\\App\\Services\\DatabaseA",
+        "construct": {
+            "host": "database.host",
+            "port": "360",
+            "user": "user",
+            "password": "123"
+        }
+    },
+    "databaseB": {
+        "class": "\\App\\Services\\DatabaseB",
+        "construct": {
+            "host": "database.host",
+            "port": "360",
+            "user": "user",
+            "password": "123"
+        }
+    }
+}
+~~~
+Este documento contiene una colección de servicios que estarán disponibles bajo el contexto de ejecución del método del punto final, dandonos la flexibilidad de obtener una instancia pre-construida y lista para ser usada.
+## Puntos finales
+--- 
+Los puntos finales de Ivy son en si una clase final PHP, estas agrupan una colección de metodos configurables por el programador que le permiten dotar de lógica simple para cada uno de ellos y asi derogar una única responsabilidad creada a partir de la funcionalidad practica de cada método.
 
-Con estas configuraciones basicas podremos ejecutar aplicaciones Ivy, si quieres mas informacion al respecto visita la [documentacion oficial](https://laravel.com/docs/7.x/valet).
+#### Ejemplo 1:
+---
+~~~
+<?php namespace App\Endpoints;
 
-## Funcionamiento de Ivy
+use Core\Abstracts\EndpointsAbstract;
 
-Partiendo de los conceptos inciciales de esta documentación, Ivy trabaja con las peticiones que son enviadas al servidor, estas son analizadas y procesadas por un pequeño ``Kernel``, el cual tiene la función de disparar las acciones de validacion y de procesamiento de la informacion de entrada.
+final class Cliente extends EndpointsAbstract
+{
+    public function todos()
+    {
+        // Algo que hacer
+    }
 
-Todo comienza dentro de la carpeta ``Public/`` dentro de la cual tendremos nuestro script de inicio, acompañado de un archivo de configiracion de servidor ``.htaccess``. Este script lo unico que contiene es la instanciacion y la ejecucion de nuestra clase ``Kernel`` y la carga de las librerias:
+    public function crear()
+    {
+        // Algo que hacer
+    }
 
-- [phpdotenv](https://github.com/vlucas/phpdotenv)
-- [Woops](https://filp.github.io/whoops/)
+    public function eliminar()
+    {
+        // Algo que hacer
+    }
 
-Que sirven para cargar variables de entorno en documentos .env y muestra de errores con estilo, respectivamente.
+    public function editar()
+    {
+        // Algo que hacer
+    }
 
-### Carpeta Core
+    public function mostrarUno()
+    {
+        // Algo que hacer
+    }
 
-Dentro de la carpeta ``Core`` se encuentra todo el codigo necesario para que la aplicacion Ivy funcione, dentro podemos localizar 4 clases php y una clase abstracta.
+    public function importar()
+    {
+        // Algo que hacer
+    }
 
-- La clase Kernel: Contiene solo un metodo publico ``run()``, el cual genera una instancia del validador de peticiones, evalua el status de la peticion y ejecuta el disparador ``Genesis``.
+    public function exportar()
+    {
+        // algo que hacer
+    }
+}
+~~~
 
+Como podemos observar un punto final es una abstracción de una entidad del sistema, a su vez estos contienen una colección de metodos que tienen una responsabilidad definida por el programador, en este caso en particular podemos ver que el punto final implementa los metodos estándar de ```REST``` y adicionalmente dos metodos que funcionan para importar y exportar una colección de clientes. Esta practica le permite al programador escalar cada punto final con una gama de metodos personalizados y ademas le provee de flexibilidad para el mantenimiento de cada método en especifico.
 
-- La clas Validador: Esta clase contiene una serie de validaciones por defecto para todas las peticiones ademas de que es la clase encargada de crear el objeto Response que sera servido al cliente. El uso de esta clase se extiende a varios niveles de abstraccion dentro de la aplicacion.
+### Obtención de información
+---
+Para acceder a la información de la petición cada punto final debe extender de una clase abstracta padre, la cual le provee una serie de metodos útiles. Esta clase utiliza dos clases puente en el constructor encargadas de manipular la información de la peticion y los servicios disponibles para la ejecución de un método de punto final.
 
-- La clase Genesis: Esta clase solo contiene el metodo ``getResponse()`` el cual se encarga de crear una instancia de la clase ``Client`` y retornar una respuesta del metodo ``run()`` de la misma, esto nos devuelve un objeto Response personalizado.
+### EndpointsAbstract
+---
+~~~
+<?php namespace Core\Abstracts;
 
-- La clase Client: La clase client es la encargada de instanciar las clases de los endpoints creados y la evaluacion de los metodos a los que intenta acceder la peticion del cliente, contiene un unico metodo publico ``run()`` el cual realiza esta evaluacion e instanciacion. Extiende de la clase ``FactoryEndpoints``, la cual sirve para almacenar las instancias de los endpoints.
+use Core\Bridges\ServicesBridge;
+use Core\Bridges\RequestBridge;
 
-- La clase abstracta ActionsAbstract: Esta clase es una clase auxiliar, la funcion que tiene es la de poder simplificar el retorno del objeto Response al cliente. Contiene un unico metodo ``run()`` el cual retorna el objeto ``response`` con el contenido personalizado. Este metodo es usado por los metodos de cada endpoint.
+abstract class EndpointsAbstract
+{
 
-### Carpeta App
+    private ServicesBridge $serviceBridge;
 
-La carpeta App es la que contiene la logica de programacion dirigida al desarrollador, dentro de esta se encuentran 2 carpetas.
+    private RequestBridge $requestBridge;
 
-- La calse FactoryEndpoints: Es una clase de trancicion, la cual tiene como objetivo el devolver una instancia de de las clases endpoint, implementa sus metodos de la interfaz ``FactoryEndpointsInterface``.
+    public function __construct(RequestBridge $requestBridge, ServicesBridge $servicesBridge)
+    {
+        $this->serviceBridge = $servicesBridge;
 
-- La Interfaz FactoryEndpointsInterface: Esta es la interfaz de implementacion de metodos, para que el patron funcione es necesario que la clase ``FactoryEndpoints`` extienda de esta.
+        $this->requestBridge = $requestBridge;
+    }
 
-- Objects: Todas las clases contenidas dentro de la carpeta ``Objects`` son clases Endpoint, son las clases que se encargan de procesar toda la logica de programacion y devolver el cuerpo del response.
+    public function getService($service)
+    {
+        return $this->serviceBridge->getService($service);
+    }
 
-## Creando un endpoint
+    public function getData()
+    {
+        return $this->requestBridge->getData();
+    }
 
-Para crear nuestra primera clase endpoint bastaria con crear una clase dentro de la carpeta ``Objects``, es importante seguir la convencion ``NombreClase`` ya que para Ivy hace uso de Autoload de ``Composer``, por lo cual los ``namespace`` deben coincidir con el nombre de la clase. Una vez creada nuestra clase Endpoint debemos registrarla en las estructuras de control de Ivy, que son ``FactoryEndpoints`` y ``FactoryEndpointsInterface``.
+    public function getParam($paramName)
+    {
+        return $this->requestBridge->getParam($paramName);
+    }
 
-Dentro de la calse ``FactoryEndpiunts`` es necesario registrar el nombre de nuestraq clase endpoint dentro del arreglo ``$endpoints`` como ``"NombreClase" => true`` y crear el metodo de instancia que seria ``public function NombreClase(){}``. Una vez registrado nuestro Endpoint tambien deberemos crear el metodo dentro de la interfaz ``FactoryEndpointsInterface`` creando el metodo de implementacion ``public function NombreClase();``.
+    public function getFiles()
+    {
+        return $this->requestBridge->getFiles();
+    }
 
-Con esto estariamos listos para comenzar a desarrollar una aplicacion Ivy.
-
-Sigueme en mis redes sociales:
-- [Facebook](https://www.facebook.com/DamianGonzalezDev)
-- [Twitter](https://twitter.com/DamianDev1)
-- [Linkedin](https://www.linkedin.com/in/damiangonzalezdev/)
-- [Youtube](https://www.youtube.com/channel/UCS2RPa81nBPQAiUFjmy2aWA?view_as=subscriber)
-
-
-Visita mi web
- 
- - [DamianDev](https://damiandev.herokuapp.com)
-
-
-> Dudas, comentarios o sugerencias, enviame un correo electronico: [ing.gonzaleza@outlook.com](mailto:ing.gonzaleza@outlook.com)
+    public function getFile($fileName)
+    {
+        return $this->requestBridge->getFile($fileName);
+    }
+}
+~~~
