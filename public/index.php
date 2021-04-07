@@ -1,19 +1,19 @@
 <?php 
 /**
- * @author DamianDev <damian27goa@gmail.com>
+ * @author Damian Gonzalez <damian.gonzalez@hamiltonandlovelace.com>
  * 
- * Este es el archivo que inicia la aplicacion
+ * Este es el archivo que inicia la aplicación
  * 
  */
 
 // Incluimos el autoload de composer
 require_once "../vendor/autoload.php";
 
-// Incluimos las librerias de inicio
+// Incluimos las librerías de inicio
 include_once "../Bootstrap.php";
 
-// Iniciamos la aplicacion
+// Iniciamos la aplicación
 $app = new \Core\Kernel;
 
-// Ejecutamos la aplicacion
+// Ejecutamos la aplicación
 $app->run();

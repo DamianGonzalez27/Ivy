@@ -5,10 +5,9 @@
  * Este archivo carga las librerias necesarias para cargar variables de entorno dentro de la aplicacion
  * y la libreria de visualizacion de errores
  */
-
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 {
@@ -24,11 +23,4 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
-define('API', json_decode(@file_get_contents(__DIR__.'/configs/api.json'),true));
-define('SERVICES', json_decode(@file_get_contents(__DIR__.'/configs/services.json'),true));
-
-/*
-$openapi = \OpenApi\scan('../App/Objects');
-header('Content-Type: application/json');
-echo $openapi->toJson();
-]*/
+include_once 'doctrine-config.php';

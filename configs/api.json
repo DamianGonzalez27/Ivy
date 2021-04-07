@@ -1,26 +1,78 @@
 {
     "name": "Ivy Api",
     "version": "1.0.0",
-    "url": "https://localhost:8000",
-    "endpoints": [
-        {
-            "name": "clientes",
-            "options": {
-                "class": "\\App\\Endpoints\\Cliente",
+    "endpoints": {
+        "clientes": {
+            "class": "\\App\\Endpoints\\Cliente",
                 "methods": {
                     "todos":{
-                        "function": "todos",
-                        "permissions": "CLIENTE_READ"
-                    },
-                    "all":{
-                        "function": "getUsers",
-                        "filters":{
-                            "orderByAge": {
-                                "class": "\\App\\Filters\\OrderBy",
-                                "index": "age"
+                        "function": "index",
+                        "permissions": "private",
+                        "filters": {
+                            "orderBy": {
+                                "column": "id|name",
+                                "order": "ASC|DESC"
+                            },
+                            "searchInLike": {
+                                "key": "string",
+                                "column": "id|name"
+                            },
+                            "searchInExact":{
+                                "key": "string",
+                                "column": "id|name"
+                            },
+                            "rangeBetween":{
+                                "column": "id|name",
+                                "min": "string",
+                                "max": "string"
+                            },
+                            "rangeLess":{
+                                "column": "id|name",
+                                "value": "string"
+                            },
+                            "rangeHigher":{
+                                "column": "id|name",
+                                "value": "string"
                             }
+                        }
+                    },
+                    "todosXlsx":{
+                        "function": "todosXlsx",
+                        "permissions": "public",
+                        "filters": {
+                            "orderBy": {
+                                "column": "id|name",
+                                "order": "ASC|DESC"
+                            },
+                            "searchInLike": {
+                                "key": "string",
+                                "column": "id|name"
+                            },
+                            "searchInExact":{
+                                "key": "string",
+                                "column": "id|name"
+                            },
+                            "rangeBetween":{
+                                "column": "id|name",
+                                "min": "string",
+                                "max": "string"
+                            },
+                            "rangeLess":{
+                                "column": "id|name",
+                                "value": "string"
+                            },
+                            "rangeHigher":{
+                                "column": "id|name",
+                                "value": "string"
+                            }
+                        }
+                    },
+                    "show":{
+                        "function": "show",
+                        "params": {
+                            "id": "required"
                         },
-                        "permissions": "CLIENTE_READ"
+                        "permissions": "public"
                     },
                     "single":{
                         "function": "getUser", 
@@ -30,15 +82,10 @@
                         "permissions": "CLIENTE_READ"
                     }
                 }
-            }
         },
-        {
-            "name": "test",
+        "test": {
             "options": {
                 "class": "\\App\\Actions\\UserActions",
-                "services": [
-                    "mail"
-                ],
                 "methods": {
                     "all":{
                         "function": "getUsers",
@@ -60,5 +107,5 @@
                 }
             }
         }
-    ]
+    }
 }

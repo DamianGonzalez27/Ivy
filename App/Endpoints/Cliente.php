@@ -1,9 +1,18 @@
 <?php namespace App\Endpoints;
 
 use Core\Abstracts\EndpointsAbstract;
-
 final class Cliente extends EndpointsAbstract
 {
+    use \Core\Traits\FindTrait;
+
+    public $modelName = 'App\Database\Models\Cliente';
+
+    public function todosXlsx()
+    {
+        $todos = $this->index()['_data'];
+
+        dd($todos);
+    }
     public function todos()
     {
         return [

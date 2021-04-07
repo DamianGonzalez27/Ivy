@@ -13,7 +13,14 @@ class Tokenizer
     {
         $this->request = $request;
 
-        $this->token = (!is_null($request->cookies->get('auth'))) ? $request->cookies->get('auth'): null;
+        $this->token = json_decode(base64_decode($request->headers->get('auth')), true);
+    }
+
+    public function validateIssetToken()
+    {
+        if(is_null($this->token))
+            return false;
+        return true;
     }
 
     public function validateTokenInternal()
@@ -21,46 +28,5 @@ class Tokenizer
         if($this->token == "")
             return false;
         return true;
-    }
-
-    public function validatePublicAccees()
-    {
-        if($this->token == "test")
-            return false;
-        return true;
-    }
-
-    public function getToken($passport)
-    {
-        $token = [
-            'passport' => $passport,
-            'token_id' => uniqid($passport.'_'.rand(10, 15))
-        ];
-        $prepareToken = json_encode($token, true);
-
-        return base64_encode($prepareToken);
-    }
-
-    public static function untokenizer($token)
-    {
-        $prepareToken =  base64_decode($token);
-
-        if(json_decode($prepareToken, true))
-        {
-            return json_decode($prepareToken, true);
-        }
-        else
-        {
-           return false; 
-        }
-
-    }
-
-    /**
-     * Get the value of request
-     */ 
-    public function getRequest()
-    {
-        return $this->request;
     }
 }

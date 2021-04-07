@@ -2,25 +2,25 @@
 
 use Core\Interfaces\FactoryInterface;
 use Core\Bridges\ServicesBridge;
-use Core\Bridges\RequestBridge;
+use Core\Bridges\ParamsRequestBridge;
 
 class FactoryEndpoints implements FactoryInterface
 {
 
-    private $endpoints;
+    private $function;
 
     private $class;
 
-    public function __construct($endpoints, $class, RequestBridge $requestBridge, ServicesBridge $servicesBridge)
+    public function __construct($function, $class, ParamsRequestBridge $requestBridge, ServicesBridge $servicesBridge, $filters)
     {
-        $this->endpoints = $endpoints;
+        $this->function = $function;
 
-        $this->class = new $class($requestBridge, $servicesBridge);
+        $this->class = new $class($requestBridge, $servicesBridge, $filters);
     }
 
     public function getFactoryResponse()
     {
-        $function = $this->endpoints['function'];
+        $function = $this->function;
 
         return $this->class->$function();
     }

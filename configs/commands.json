@@ -1,0 +1,8 @@
+{
+    "make": {
+        "endpoint": {
+            "description": "Crea puntos finales",
+            "path": ""
+        }
+    }
+}

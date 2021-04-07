@@ -1,20 +1,33 @@
 <?php namespace Core\Abstracts;
 
+use Doctrine\ORM\EntityManager;
 use Core\Bridges\ServicesBridge;
-use Core\Bridges\RequestBridge;
+use Core\Bridges\ParamsRequestBridge;
 
 abstract class EndpointsAbstract
 {
 
     private ServicesBridge $serviceBridge;
 
-    private RequestBridge $requestBridge;
+    private ParamsRequestBridge $requestBridge;
 
-    public function __construct(RequestBridge $requestBridge, ServicesBridge $servicesBridge)
+    public EntityManager $entityManager;
+
+    private $filters;
+
+    public $entity;
+
+    public function __construct(ParamsRequestBridge $requestBridge, ServicesBridge $servicesBridge, $filters)
     {
         $this->serviceBridge = $servicesBridge;
 
         $this->requestBridge = $requestBridge;
+
+        $this->entityManager = getEntityManager();
+
+        $this->entity = $this->entityManager->getRepository($this->modelName);
+
+        $this->filters = $filters;
     }
 
     public function getService($service)
@@ -40,5 +53,10 @@ abstract class EndpointsAbstract
     public function getFile($fileName)
     {
         return $this->requestBridge->getFile($fileName);
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }

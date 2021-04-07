@@ -1,0 +1,9 @@
+<?php 
+
+require_once './vendor/autoload.php';
+
+
+
+print_r($argc);
+echo PHP_EOL;
+print_r($argv);

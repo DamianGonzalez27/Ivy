@@ -2,20 +2,20 @@
 
 use Core\Validator;
 use Core\Genesis;
-use League\Plates\Engine;
-use Symfony\Component\HttpFoundation\Response;
+use Core\Routes;
+use Core\Tokenizer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class Kernel
 {
     private Request $request;
-    private Engine $templates;
+
+    private Tokenizer $tokenizer;
 
     private $apiParams;
 
     private $services;
-
-    private $routes;
 
     /**
      * @author DamianDev <damian27goa@gmail.com>
@@ -25,10 +25,6 @@ class Kernel
     public function __construct()
     {
         $this->request = Request::createFromGlobals();
-
-        $this->templates = new Engine('../views');
-
-        $this->templates->loadExtension(new \League\Plates\Extension\URI($_SERVER['SERVER_NAME']));
 
         $this->apiParams = json_decode(@\file_get_contents('../configs/api.json'), true);
 
@@ -54,15 +50,35 @@ class Kernel
      */
     public function run()
     {
-        $validator = new Validator($this->request, $this->routes);
+        $response = null;
 
-        if(!$validator->validate())
+        switch($this->request->server->get('REQUEST_METHOD'))
         {
-            $response = new Response($this->templates->render('404'), 404);
-            $response->send();
+            case 'GET': 
+                $route = new Routes(
+                    $this->request, 
+                    $this->apiParams
+                );
+
+                $response = $route->execute();
+            break;
+
+            case 'POST': 
+                $genesis = new Genesis(
+                    $this->request, 
+                    new Tokenizer($this->request),
+                    $this->apiParams, 
+                    $this->services
+                );
+
+                $response = $genesis->execute();
+            break;
+
+            default:
+                $response = new JsonResponse(['400' => 'Method is not supported'], 400);
+            break;
         }
-        $genesis = new Genesis($validator, $this->templates, $this->apiParams, $this->services);
-        
-        $genesis->response()->send();
+
+        $response->send();
     }
 }

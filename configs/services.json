@@ -4,5 +4,12 @@
         "construct": {
             "host": "smtp.hostinger.com"
         }
+    },
+    "template": {
+        "class": "\\App\\Services\\Template",
+        "construct": {
+            "reportsDir": "../templates/",
+            "storageDir": "../storage/"
+        }
     }
 }
